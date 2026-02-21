@@ -3,17 +3,19 @@ import { notFound } from 'next/navigation';
 import { stories } from '@/lib/data';
 
 type PageProps = {
-  params: {
+  params: Promise<{
     storyId: string;
-  };
+    chapterId: string;
+  }>;
 };
 
 function getStory(storyId: string) {
   return stories.find((s) => s.id === storyId);
 }
 
-export default function NewChapterPage({ params }: PageProps) {
-  const story = getStory(params.storyId);
+export default async function NewChapterPage({ params }: PageProps) {
+  const { storyId } = await params;
+  const story = getStory(storyId);
 
   if (!story) {
     notFound();

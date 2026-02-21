@@ -5,9 +5,9 @@ import { stories, users, chapters } from '@/lib/data';
 
 // Define the type for the props
 type PageProps = {
-  params: {
+  params: Promise<{
     storyId: string;
-  };
+  }>;
 };
 
 // Data fetching function
@@ -27,8 +27,9 @@ function getStoryDetails(storyId: string) {
   };
 }
 
-export default function StoryDetailPage({ params }: PageProps) {
-  const story = getStoryDetails(params.storyId);
+export default async function StoryDetailPage({ params }: PageProps) {
+  const { storyId } = await params;
+  const story = getStoryDetails(storyId);
 
   if (!story) {
     notFound();
