@@ -1,28 +1,38 @@
-/* Keep existing TailwindCSS imports at the top */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Add these new classes for reading themes */
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .theme-white {
   background-color: #ffffff;
-  color: #1f2937; /* gray-800 */
+  color: #1f2937;
 }
+
 .theme-sepia {
   background-color: #fbf5e9;
   color: #5d4037;
 }
+
 .theme-dark {
   background-color: #121212;
-  color: #e5e7eb; /* gray-200 */
-}
-
-/* For prose styles in dark mode */
-.theme-dark .prose {
   color: #e5e7eb;
 }
+
+.theme-dark .prose,
 .theme-dark .prose p,
 .theme-dark .prose h1,
 .theme-dark .prose h2 {
-   color: #e5e7eb;
+  color: #e5e7eb;
 }

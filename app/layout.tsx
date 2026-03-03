@@ -1,14 +1,28 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/app/components/Navbar';
 import BottomNavbar from './components/BottomNavbar';
-
-const inter = Inter({ subsets: ['latin'] });
+import PWARegister from './components/PWARegister';
 
 export const metadata: Metadata = {
   title: 'Inkbwet - Your Story, Your World',
   description: 'A platform for aspiring writers to share their episodic stories.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Inkbwet',
+  },
+  icons: {
+    apple: '/icons/icon-192.svg',
+    icon: '/icons/icon-192.svg',
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#2563eb',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -18,21 +32,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-    <head>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    </head>
-      <body className={`${inter.className} bg-gray-50`}>
-        {/* Desktop Top Navbar (hidden on mobile) */}
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+      </head>
+      <body className="bg-slate-50 text-slate-900">
+        <PWARegister />
         <div className="hidden md:block">
           <Navbar />
         </div>
 
-        {/* Add padding-bottom on mobile to prevent content from being hidden by BottomNavbar */}
-        <main className="container mx-auto px-4 py-6 pb-24 md:pb-6">
+        <main className="mx-auto w-full max-w-6xl px-3 py-4 pb-24 sm:px-4 md:px-6 md:py-6 md:pb-6">
           {children}
         </main>
 
-        {/* Mobile Bottom Navbar (hidden on desktop) */}
         <div className="block md:hidden">
           <BottomNavbar />
         </div>
