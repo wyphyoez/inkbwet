@@ -1,6 +1,6 @@
 "use client";
 
-import { Sun, Moon, Minus, Plus, Type } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 import React from 'react';
 
 interface ReaderControlsProps {
@@ -14,37 +14,36 @@ const MIN_FONT_SIZE = 12;
 const MAX_FONT_SIZE = 32;
 
 const ReaderControls: React.FC<ReaderControlsProps> = ({ fontSize, setFontSize, theme, setTheme }) => {
-  
   const increaseFontSize = () => {
     setFontSize(Math.min(fontSize + 2, MAX_FONT_SIZE));
   };
-  
+
   const decreaseFontSize = () => {
     setFontSize(Math.max(fontSize - 2, MIN_FONT_SIZE));
   };
 
   return (
-    <div className="sticky top-0 bg-inherit z-10 py-3 mb-4">
-      <div className="flex justify-between items-center max-w-3xl mx-auto px-4 border rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm">
-        <div className="flex items-center gap-2">
-           <button onClick={decreaseFontSize} disabled={fontSize <= MIN_FONT_SIZE} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-              <Minus size={20} />
-           </button>
-           <span className="text-sm font-semibold w-8 text-center">{fontSize}px</span>
-           <button onClick={increaseFontSize} disabled={fontSize >= MAX_FONT_SIZE} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-              <Plus size={20} />
-           </button>
+    <div className="sticky top-0 z-10 mb-4 py-3">
+      <div className="mx-auto flex max-w-3xl items-center justify-between rounded-2xl border border-slate-200 bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur sm:px-4">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <button onClick={decreaseFontSize} disabled={fontSize <= MIN_FONT_SIZE} className="rounded-full p-2 disabled:cursor-not-allowed disabled:opacity-50 hover:bg-slate-200">
+            <Minus size={20} />
+          </button>
+          <span className="w-8 text-center text-sm font-semibold">{fontSize}px</span>
+          <button onClick={increaseFontSize} disabled={fontSize >= MAX_FONT_SIZE} className="rounded-full p-2 disabled:cursor-not-allowed disabled:opacity-50 hover:bg-slate-200">
+            <Plus size={20} />
+          </button>
         </div>
-        <div className="flex items-center gap-2">
-            <button onClick={() => setTheme('theme-white')} className={`p-2 rounded-full ${theme === 'theme-white' ? 'ring-2 ring-blue-500' : ''}`}>
-              <div className="w-6 h-6 rounded-full bg-white border"></div>
-            </button>
-            <button onClick={() => setTheme('theme-sepia')} className={`p-2 rounded-full ${theme === 'theme-sepia' ? 'ring-2 ring-blue-500' : ''}`}>
-               <div className="w-6 h-6 rounded-full bg-[#fbf5e9] border"></div>
-            </button>
-             <button onClick={() => setTheme('theme-dark')} className={`p-2 rounded-full ${theme === 'theme-dark' ? 'ring-2 ring-blue-500' : ''}`}>
-               <div className="w-6 h-6 rounded-full bg-[#121212] border border-gray-600"></div>
-            </button>
+        <div className="flex items-center gap-1 sm:gap-2">
+          <button onClick={() => setTheme('theme-white')} className={`rounded-full p-1.5 sm:p-2 ${theme === 'theme-white' ? 'ring-2 ring-blue-500' : ''}`}>
+            <div className="h-5 w-5 rounded-full border bg-white sm:h-6 sm:w-6" />
+          </button>
+          <button onClick={() => setTheme('theme-sepia')} className={`rounded-full p-1.5 sm:p-2 ${theme === 'theme-sepia' ? 'ring-2 ring-blue-500' : ''}`}>
+            <div className="h-5 w-5 rounded-full border bg-[#fbf5e9] sm:h-6 sm:w-6" />
+          </button>
+          <button onClick={() => setTheme('theme-dark')} className={`rounded-full p-1.5 sm:p-2 ${theme === 'theme-dark' ? 'ring-2 ring-blue-500' : ''}`}>
+            <div className="h-5 w-5 rounded-full border border-slate-600 bg-[#121212] sm:h-6 sm:w-6" />
+          </button>
         </div>
       </div>
     </div>
