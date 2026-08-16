@@ -5,49 +5,27 @@ import BottomNavbar from './components/BottomNavbar';
 import PWARegister from './components/PWARegister';
 
 export const metadata: Metadata = {
-  title: 'Inkbwet - Your Story, Your World',
-  description: 'A platform for aspiring writers to share their episodic stories.',
+  title: 'Inkbwet — Stories worth staying for',
+  description: 'Discover, write, and follow episodic stories on Inkbwet.',
   manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Inkbwet',
-  },
-  icons: {
-    apple: '/icons/icon-192.svg',
-    icon: '/icons/icon-192.svg',
-  },
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'Inkbwet' },
+  icons: { apple: '/icons/icon-192.svg', icon: '/icons/icon-192.svg' },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#2563eb',
+  themeColor: '#4f46e5',
   width: 'device-width',
   initialScale: 1,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-      </head>
-      <body className="bg-slate-50 text-slate-900">
+      <body>
         <PWARegister />
-        <div className="hidden md:block">
-          <Navbar />
-        </div>
-
-        <main className="mx-auto w-full max-w-6xl px-3 py-4 pb-24 sm:px-4 md:px-6 md:py-6 md:pb-6">
-          {children}
-        </main>
-
-        <div className="block md:hidden">
-          <BottomNavbar />
-        </div>
+        <Navbar />
+        <main className="mx-auto w-full max-w-7xl px-4 pb-24 pt-6 sm:px-6 md:pb-10 lg:px-8">{children}</main>
+        <BottomNavbar />
       </body>
     </html>
   );

@@ -20,7 +20,7 @@ const BottomNavbar: React.FC = () => {
   }
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 pb-safe shadow-[0_-6px_24px_rgba(15,23,42,0.08)] backdrop-blur">
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 pb-safe shadow-[0_-6px_24px_rgba(15,23,42,0.08)] backdrop-blur md:hidden">
       <div className="mx-auto flex h-16 max-w-lg items-center justify-around">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href === '/dashboard' && pathname.startsWith('/dashboard'));
@@ -29,7 +29,7 @@ const BottomNavbar: React.FC = () => {
               href={item.href}
               key={item.label}
               className={`flex w-full flex-col items-center justify-center gap-1 transition-colors ${
-                isActive ? 'text-blue-600' : 'text-slate-500 hover:text-blue-500'
+                isActive ? 'text-primary' : 'text-muted-foreground hover:text-primary'
               }`}
             >
               <item.icon size={22} />
