@@ -1,0 +1,131 @@
+
+အခန်း ၁ :: စတင်ခြင်း 7
+- Encapsulation
+- Inheritance
+- Polymorphism
+- Abstraction
+- Abstraction
+- Abstraction
+- Abstraction
+
+အခန်း ၅ :: Software Design and Architecture 39
+- Code example
+- Coupling
+- Code example
+- ၅.၂.၃ Architecture Documentation and Views (4+1 Model)
+- Code example
+- Code example
+- Level 3: Component Diagram (The Internal Structure)
+- Code example
+- ၂. CAP Theorem (Distributed Systems Dilemma)
+- ၅.၃.၁ Layered Architecture (N-Tier)
+- ၅.၃.၂ Model-View-Controller (MVC) family
+- ၅.၃.၃ Microkernel Architecture (Plug-in Architecture)
+- ၅.၃.၄ Pipe-and-Filter Architecture
+- ၅.၄.၁ Microservices Architecture
+- ၅.၄.၂ Event-Driven Architecture (EDA)
+- ၅.၄.၄ Service-Oriented Architecture (SOA)
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- ၅.၅.၃ Law of Demeter (Principle of Least Knowledge)
+- Code example
+- Code example
+- Code example
+- Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)
+- Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)
+- ၁။ Class Diagram:
+- ၂။ Sequence Diagram:
+- ၃။ Use Case Diagram:
+- Code example
+- Code example
+- Code example
+- ၅.၈.၃ Anemic vs. Rich Domain Model
+- Code example
+- ၅.၈.၄ The Big Picture: DDD Layered Architecture
+
+အခန်း ၆ :: Design to Reliable Code 22
+- ၆.၂.၁ Feature Branch Workflow
+- Merge vs. Rebase
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- ၆.၂.၂ Commit Message Standards (Conventional Commits)
+- Example: Inconsistent vs. Standardized (TypeScript)
+- Example: Inconsistent vs. Standardized (TypeScript)
+- Example: Extract Class Refactoring (TypeScript)
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+- Code example
+
+အခန်း ၇ :: Software Verification and Validation (V&V) 3
+- Code example
+- ၇.၃ Testing Strategies နှင့် The Testing Pyramid
+- 1. Unit Testing (အောက်ခြေဖောင်ဒေးရှင်း)
+
+အခန်း ၈ :: Fundamental Principles of Software Engineering 5
+- Code example
+- Encapsulation (အလုံပိတ်ခြင်း)
+- ၈.၃ Modularity and Composability
+- Code example
+- Code example
+
+အခန်း ၉ :: Software Quality Principles and Attributes 3
+- McCall’s Quality Model (1977)
+- ၉.၂ ISO/IEC 25010 Quality Model
+- ၉.၄.၃ Cohesion
+
+အခန်း ၁၀ :: People, Process, and Planning 3
+- ၁၀.၁ The Project Management Triangle (The Iron Triangle)
+- Burndown Charts
+- ၁၀.၄.၂ The Role of "Full Stack" in Stream-Aligned Teams
+
+အခန်း ၁၁ :: Software Quality Assurance (SQA) 3
+- 2. Quality Control (QC) - "Product Focus"
+- Level 5: Optimizing (Continuous Improvement)
+- ၁၁.၇ Defect Management
+
+အခန်း ၁၂ :: Risk Management 2
+- ၁၂.၂ Risk Identification, Analysis, and Prioritization
+- Code example
+
+အခန်း ၁၃ :: DevOps and Site Reliability Engineering (SRE) 1
+- Tools and Workflow
+
+အခန်း ၁၄ :: Security 9
+- ၂. Defense in Depth (အလွှာလိုက် ကာကွယ်ခြင်း)
+- ၁၄.၂ Data Protection Essentials: Encoding, Encryption vs Hashing
+- Code example
+- B. Asymmetric Encryption (Mailbox Role)
+- The Solution: BFF Pattern (Backend for Frontend)
+- The Solution: BFF Pattern (Backend for Frontend)
+- ၁၄.၇ Network Security & MitM Attacks
+- ၂. CSRF (Cross-Site Request Forgery)
+- ၁၄.၉ DevSecOps Pipeline
+
+အခန်း ၁၅ :: Maintenance 1
+- 4. Preventive Maintenance (ကြိုတင် ကာကွယ်ခြင်း)
+
+အခန်း ၁၆ :: Performance and Scalability 7
+- Horizontal Scaling (Scaling Out)
+- Caching Flow (Cache-Aside Pattern)
+- 1. Write-through
+- 2. Write-around
+- 3. Write-back (Write-behind)
+- Load Balancer
+- High Availability (HA)

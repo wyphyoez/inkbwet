@@ -1,0 +1,1577 @@
+[
+  {
+    "id": "chp_01-code-1",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Encapsulation",
+    "context": [
+      "Encapsulation",
+      "Class တစ်ခုထဲမှာ data (properties) တွေ , method (function) တွေကို capsule လိုမျိုး အလုံပိတ်ထားသလို ထည့်သွင်း သိမ်းဆည်း ခြင်းလို့ ဆိုလို့ရမယ်။ Class အပြင်ဘက်ကနေ data တွေကို တိုက်ရိုက် ဝင်ရောက်ခွင့် မပြုပဲ  class ထဲမှာ သတ်မှတ်ထားသည့် method တွဤေ ကနေ တဆင့်သာ ဝင်ရောက်အသုံးပြု  စေတာပါ။ ဒါကြောင့် data လုံခြုံရေး ကို ပိုကောင်းစေပြီး မမျှော်လင့်ပဲ မှားယွင်း ပြောင်းလဲ မိတာမျိုးကနေ ကာကွယ် ပေးနိုင်တယ်။",
+      "ဥပမာ",
+      "ကားတစ်စီးမှာ Engine, Break စတာတွေကို ကားမောင်းသူက အသေးစိတ် သိဖို့ မလိုဘူး။​သိဖို့ လိုတာက ဘယ် function တွေက ဘာလုပ်သလဲ ဆိုတာပါပဲ။ Break နင်းရင် ကားရပ် မယ် ဆိုတာမျိုးပေါ့။  ဒီမှာ ကား  ရဲ့ အတွင်း ပိုင်း ဖွဲ့စည်း ပုံက Encapsulation လုပ်ထားပြီး driver က သုံးခွင့် ပေးထားသည့် funciton တွေကို အသုံးပြုနေသည့် သဘောပေါ့။"
+    ],
+    "language": "typescript",
+    "code": "class BankAccount {\n    // private property ကို class အပြင်ကနေ တိုက်ရိုက်ခေါ်သုံးလို့မရပါ\n    private balance: number;\n\n    constructor(initialBalance: number) {\n        this.balance = initialBalance;\n    }\n\n    // public method ကနေတစ်ဆင့် private property ကို ဝင်သုံးခွင့်ပေးခြင်း (Getter)\n    public getBalance(): number {\n        return this.balance;\n    }\n\n    // public method ကနေတစ်ဆင့် private property ကို ပြောင်းလဲခွင့်ပေးခြင်း\n    public deposit(amount: number): void {\n        if (amount > 0) {\n            this.balance += amount;\n            console.log(`Deposited: ${amount}. New balance: ${this.balance}`);\n        }\n    }\n\n    public withdraw(amount: number): void {\n        if (amount > 0 && amount <= this.balance) {\n            this.balance -= amount;\n            console.log(`Withdrew: ${amount}. New balance: ${this.balance}`);\n        } else {\n            console.log('Insufficient funds or invalid amount.');\n        }\n    }\n}\n\nconst myAccount = new BankAccount(1000);\n\n// console.log(myAccount.balance); // Error! 'balance' is private. တိုက်ရိုက်ခေါ်လို့မရပါ။\n\nconsole.log(myAccount.getBalance()); // 1000\n\nmyAccount.deposit(500); // Deposited: $500. New balance: $1500\nmyAccount.withdraw(200); // Withdrew: $200. New balance: $1300",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-2",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Inheritance",
+    "context": [
+      "Inheritance",
+      "အမွေဆက်ခံခြင်းလို့ ပဲ အလွယ်ပြောရမှာပဲ။ ရှိပြီးသား class (parent class ဒါမှမဟုတ် base class) တစ်ခုရဲ့ property တွေ method တွေကို တခြား class အသစ် တစ်ခု (child class or derived class) တစ်ခု က အမွေ ဆက်ခံပြီး ပြန်လည် အသုံးပြုနိုင်သည့် သဘောမျိုးပါ။ ဒါကြောင့် code တွေ ထပ်ခါ ထပ်ခါ ရေးစရာ မလိုပဲ ပြန်လည် အသုံးပြုနိုင်စွမ်း (code reusability) ကို မြှင့် တင်ပေးပါတယ်။",
+      "ဥပမာ",
+      "Animal ဆိုသည့် ယေဘူယျ class တစ်ခုမှာ စားသည် အိပ်သည် ဆိုသည့် method ရှိမယ်။ Dog class က Animal class ကို inheritance လုပ်လိုက်ရင် eat(), sleep() ဆိုသည့် function တွေက Dog class မှာ ပါပြီး သား ဖြစ်သွားပါမယ်။ Dog မှာ ကတော့ ကိုယ်ပိုင် bark() ဆိုသည့် functrion တစ်ခု ထပ်ဖြည့် ရုံပါပဲ။"
+    ],
+    "language": "typescript",
+    "code": "// Parent Class (Base Class)\nclass Animal {\n    name: string;\n\n    constructor(name: string) {\n        this.name = name;\n    }\n\n    eat(): void {\n        console.log(`${this.name} is eating.`);\n    }\n\n    sleep(): void {\n        console.log(`${this.name} is sleeping.`);\n    }\n}\n\n// Child Class (Derived Class) - Animal class ကို အမွေဆက်ခံခြင်း\nclass Dog extends Animal {\n    // ကိုယ်ပိုင် method အသစ်\n    bark(): void {\n        console.log('Woof! Woof!');\n    }\n}\n\nclass Cat extends Animal {\n    // ကိုယ်ပိုင် method အသစ်\n    meow(): void {\n        console.log('Meow!');\n    }\n}\n\nconst myDog = new Dog('Aung Net');\nmyDog.eat();   // \"Aung Net is eating.\" (Animal class ကနေ အမွေရထားတာ)\nmyDog.sleep(); // \"Aung Net is sleeping.\" (Animal class ကနေ အမွေရထားတာ)\nmyDog.bark();  // \"Woof! Woof!\" (Dog class ရဲ့ ကိုယ်ပိုင် method)\n\nconst myCat = new Cat('Mee Phyu');\nmyCat.eat();   // \"Mee Phyu is eating.\"\nmyCat.meow();  // \"Meow!\"",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-3",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Polymorphism",
+    "context": [
+      "Polymorphism",
+      "Polymorphism ဆိုတာ ကတော့ ပုံစံ အမျိုးမျိုး ရှိခြင်း လို့ ဆိုနိုင်ပါတယ်။ class တွေက parent class တစ်ခုတည်းက ဆင်းသက်လာပေမယ့် method တစ်ခုတည်းကို တစ်ကောင်ခြင်းစီရဲ့ ကိုယ်ပိုင် ပုံစံ နဲ့ မတူ ပဲ ကွဲပြားစွာ အလုပ်လုပ်နိုင်ပါတယ်။ တနည်းဆိုရင် Method Overriding ပေါ့။",
+      "ဥပမာ",
+      "Animal class မှာ makeSound() ဆိုသည့် method ရှိတယ်။ Dog class က Woof လို့ ဟောင်သည့် ပုံစံ လုပ်ပြီး Cat class က Meow ဆိုပြီး အလုပ်လုပ်စေပါတယ်။"
+    ],
+    "language": "typescript",
+    "code": "class Animal {\n    makeSound(): void {\n        console.log('Some generic animal sound');\n    }\n}\n\nclass Dog extends Animal {\n    // Parent class က makeSound() method ကို Override လုပ်ခြင်း\n    makeSound(): void {\n        console.log('Woof! Woof!');\n    }\n}\n\nclass Cat extends Animal {\n    // Parent class က makeSound() method ကို Override လုပ်ခြင်း\n    makeSound(): void {\n        console.log('Meow!');\n    }\n}\n\nclass Cow extends Animal {\n    // Parent class က makeSound() method ကို Override လုပ်ခြင်း\n    makeSound(): void {\n        console.log('Moo!');\n    }\n}\n\nconst animals: Animal[] = [new Dog(), new Cat(), new Cow()];\n\n// animals array ထဲက object တစ်ခုချင်းစီဟာ Animal အမျိုးအစားဖြစ်ပေမယ့်၊\n// makeSound() ကို ခေါ်လိုက်တဲ့အခါ သူ့ရဲ့ မူလ class အစစ် (Dog, Cat, Cow) က\n// override လုပ်ထားတဲ့ method ကိုပဲ အလုပ်လုပ်သွားပါတယ်။\nanimals.forEach(animal => {\n    animal.makeSound();\n});\n\n// Output:\n// Woof! Woof!\n// Meow!\n// Moo!",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-4",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Abstraction",
+    "context": [
+      "Animal class မှာ makeSound() ဆိုသည့် method ရှိတယ်။ Dog class က Woof လို့ ဟောင်သည့် ပုံစံ လုပ်ပြီး Cat class က Meow ဆိုပြီး အလုပ်လုပ်စေပါတယ်။",
+      "Abstraction",
+      "Abstraction ဆိုတာကတော့ object တစ်ခု ရဲ့ ရှုပ်ထွေးသည့် တည်ဆောက်ပုံကို မရေးသားထားတော့ လိုအပ်သည့် class ကသာ ရေးသားခြင်းပါ။ တစ်နည်းပြောရင် Class ကို သုံးမယ့် သူတွေက Class က ဘာအလုပ်လုပ်တယ် ဆိုတာ သိရင်ရပြီ။ ဘယ်လို အလုပ်လုပ် ဆိုတာ သိဖို့ မလိုဘူး။ ဒီ Class မှာ ဒီ function ပါတယ် ဆိုတာ သိရင် ရပြီ။ နောက်တစ်မျိုး ကတော့ ဒီ class ကို extend လုပ် သုံးမယ် ဆိုရင် ဒီ function တွေ မဖြစ်မနေ ထည့်သွင်း ပေးရမယ် ဆိုတာမျိုးကို ဖော်ပြခြင်းပါ။",
+      "Typescript မှာ abstract မရှိသည့် အတွက် Java ဖြင့် code ဖော်ပြလိုက်ပါတယ်။"
+    ],
+    "language": "java",
+    "code": "// Shape.java\n\npublic abstract class Shape {\n\n    // Concrete Method (Implementation ပါတဲ့ သာမန် method)\n    // ဒီ class ကို extend လုပ်တဲ့ class တိုင်း ဒီ method ကို အလိုအလျောက် ရရှိပါမယ်။\n    public void displayInfo() {\n        System.out.println(\"This is a geometric shape.\");\n    }\n\n    // Abstract Method (Implementation မပါတဲ့ method)\n    // ဒီ class ကို extend လုပ်တဲ့ class တိုင်းက ဒီ method ကို မဖြစ်မနေ implement လုပ်ပေးရပါမယ်။\n    public abstract double calculateArea();\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-5",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Abstraction",
+    "context": [
+      "Animal class မှာ makeSound() ဆိုသည့် method ရှိတယ်။ Dog class က Woof လို့ ဟောင်သည့် ပုံစံ လုပ်ပြီး Cat class က Meow ဆိုပြီး အလုပ်လုပ်စေပါတယ်။",
+      "Abstraction",
+      "Abstraction ဆိုတာကတော့ object တစ်ခု ရဲ့ ရှုပ်ထွေးသည့် တည်ဆောက်ပုံကို မရေးသားထားတော့ လိုအပ်သည့် class ကသာ ရေးသားခြင်းပါ။ တစ်နည်းပြောရင် Class ကို သုံးမယ့် သူတွေက Class က ဘာအလုပ်လုပ်တယ် ဆိုတာ သိရင်ရပြီ။ ဘယ်လို အလုပ်လုပ် ဆိုတာ သိဖို့ မလိုဘူး။ ဒီ Class မှာ ဒီ function ပါတယ် ဆိုတာ သိရင် ရပြီ။ နောက်တစ်မျိုး ကတော့ ဒီ class ကို extend လုပ် သုံးမယ် ဆိုရင် ဒီ function တွေ မဖြစ်မနေ ထည့်သွင်း ပေးရမယ် ဆိုတာမျိုးကို ဖော်ပြခြင်းပါ။",
+      "Typescript မှာ abstract မရှိသည့် အတွက် Java ဖြင့် code ဖော်ပြလိုက်ပါတယ်။"
+    ],
+    "language": "java",
+    "code": "// Circle.java\n\npublic class Circle extends Shape {\n    private double radius;\n\n    public Circle(double radius) {\n        this.radius = radius;\n    }\n\n    // Shape class က abstract method ကို Override လုပ်ပြီး implement လုပ်ခြင်း\n    @Override\n    public double calculateArea() {\n        return Math.PI * radius * radius;\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-6",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Abstraction",
+    "context": [
+      "Animal class မှာ makeSound() ဆိုသည့် method ရှိတယ်။ Dog class က Woof လို့ ဟောင်သည့် ပုံစံ လုပ်ပြီး Cat class က Meow ဆိုပြီး အလုပ်လုပ်စေပါတယ်။",
+      "Abstraction",
+      "Abstraction ဆိုတာကတော့ object တစ်ခု ရဲ့ ရှုပ်ထွေးသည့် တည်ဆောက်ပုံကို မရေးသားထားတော့ လိုအပ်သည့် class ကသာ ရေးသားခြင်းပါ။ တစ်နည်းပြောရင် Class ကို သုံးမယ့် သူတွေက Class က ဘာအလုပ်လုပ်တယ် ဆိုတာ သိရင်ရပြီ။ ဘယ်လို အလုပ်လုပ် ဆိုတာ သိဖို့ မလိုဘူး။ ဒီ Class မှာ ဒီ function ပါတယ် ဆိုတာ သိရင် ရပြီ။ နောက်တစ်မျိုး ကတော့ ဒီ class ကို extend လုပ် သုံးမယ် ဆိုရင် ဒီ function တွေ မဖြစ်မနေ ထည့်သွင်း ပေးရမယ် ဆိုတာမျိုးကို ဖော်ပြခြင်းပါ။",
+      "Typescript မှာ abstract မရှိသည့် အတွက် Java ဖြင့် code ဖော်ပြလိုက်ပါတယ်။"
+    ],
+    "language": "java",
+    "code": "// Rectangle.java\n\npublic class Rectangle extends Shape {\n    private double width;\n    private double height;\n\n    public Rectangle(double width, double height) {\n        this.width = width;\n        this.height = height;\n    }\n\n    // Shape class က abstract method ကို Override လုပ်ပြီး implement လုပ်ခြင်း\n    @Override\n    public double calculateArea() {\n        return width * height;\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_01-code-7",
+    "chapter": "အခန်း ၁ :: စတင်ခြင်း",
+    "chapterFile": "chp_01.html",
+    "heading": "Abstraction",
+    "context": [
+      "Animal class မှာ makeSound() ဆိုသည့် method ရှိတယ်။ Dog class က Woof လို့ ဟောင်သည့် ပုံစံ လုပ်ပြီး Cat class က Meow ဆိုပြီး အလုပ်လုပ်စေပါတယ်။",
+      "Abstraction",
+      "Abstraction ဆိုတာကတော့ object တစ်ခု ရဲ့ ရှုပ်ထွေးသည့် တည်ဆောက်ပုံကို မရေးသားထားတော့ လိုအပ်သည့် class ကသာ ရေးသားခြင်းပါ။ တစ်နည်းပြောရင် Class ကို သုံးမယ့် သူတွေက Class က ဘာအလုပ်လုပ်တယ် ဆိုတာ သိရင်ရပြီ။ ဘယ်လို အလုပ်လုပ် ဆိုတာ သိဖို့ မလိုဘူး။ ဒီ Class မှာ ဒီ function ပါတယ် ဆိုတာ သိရင် ရပြီ။ နောက်တစ်မျိုး ကတော့ ဒီ class ကို extend လုပ် သုံးမယ် ဆိုရင် ဒီ function တွေ မဖြစ်မနေ ထည့်သွင်း ပေးရမယ် ဆိုတာမျိုးကို ဖော်ပြခြင်းပါ။",
+      "Typescript မှာ abstract မရှိသည့် အတွက် Java ဖြင့် code ဖော်ပြလိုက်ပါတယ်။"
+    ],
+    "language": "java",
+    "code": "// Main.java\n\npublic class Main {\n    public static void main(String[] args) {\n        // Shape myShape = new Shape(); // Error! Abstract class ကို object တိုက်ရိုက်ဆောက်လို့ မရပါ။\n\n        // Concrete class တွေကနေ object ဆောက်ခြင်း\n        Shape circle = new Circle(5.0);\n        Shape rectangle = new Rectangle(4.0, 6.0);\n\n        // Circle object က သူ့ရဲ့ calculateArea() ကို ခေါ်သုံးခြင်း\n        System.out.println(\"Area of Circle: \" + circle.calculateArea());\n\n        // Rectangle object က သူ့ရဲ့ calculateArea() ကို ခေါ်သုံးခြင်း\n        System.out.println(\"Area of Rectangle: \" + rectangle.calculateArea());\n\n        // Parent class (Shape) က concrete method ကို ခေါ်သုံးကြည့်ခြင်း\n        circle.displayInfo();\n    }\n}\n\n//output\n/*\nArea of Circle: 78.53981633974483\nArea of Rectangle: 24.0\nThis is a geometric shape.\n*/",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-1",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Module တစ်ခု အတွင်း မှာ ရှိသည့် အစိတ်အပိုင်း functions, data က တူညီသည့် ရည်ရွယ်ချက် တစ်ခု အတွက် ဘယ်လောက်ထိ ဆက်စပ်မှု ရှိလဲ ဆိုတာကို တိုးတာ ခြင်းပါ။​ High Cohesion ဖြစ်ဖို့ လိုပါတယ်။ ဆိုလိုတာက Module တစ်ခုက တာဝန်တစ်ခု တည်းကို သာ ကောင်းကောင်း လုပ်ဆောင်သင့်ပါတယ်။",
+      "ဥပမာ - EmailService module ဆိုရင် Email ပို့တာ နဲ့ ပတ်သက်သည့် အလုပ်တွေကိုပဲ လုပ်သင့်ပါတယ်။ User Login ဝင်တာ ပိုက်ဆံ ရှင်းတာ သွားမလုပ်သင့်ပါဘူး။",
+      "ဒီအဆင့်မှာ High Cohesion နဲ့ Single Responsibility ကို တူတယ်လို့ ထင်ကြတာ ရှိတယ်။ တကယ်တန်း က မတူပါဘူး။​",
+      "ဥပမာ High Cohesion လို့ ထင်ရပေမယ့် SRP မရှိသည့် class တစ်ခုကို ကြည့်ရအောင်။"
+    ],
+    "language": "ts",
+    "code": "class UserProfile {\n    updateUsername(id: number, newName: string) {\n        // Update name logic\n    }\n    updateAvatar(id: number, image: Blob) {\n        // Image resizing & upload logic\n    }\n    changePassword(id: number, newPass: string) {\n        // Encryption logic\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-2",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Coupling",
+    "context": [
+      "တို့ပါတယ်။ ဒါက High Cohesion ဖြစ်တယ်။ ဒါပေမယ့် SPR ဖြစ်မနေဘူး။ Encryption က security နဲ့ ဆိုင်တယ်။ HTML encoding က Encoding နဲ့ ဆိုင်တယ်။ Logic တွေက string ဆိုသည့် ခေါင်းစဥ်အောက်မှာ စုနေပေမယ့် ပြောင်းလဲရမယ့် အကြောင်းအရင်း က တူမနေပါဘူး။",
+      "Coupling",
+      "Module နှစ်ခု သို့မဟုတ် နှစ်ခု ထက် ပိုသည့် Module တွေ အချင်းချင်း ဘယ်လောက် ထိ မှီခိုနေလဲ ဆိုတာပါ။ Low Coupling ဖြစ်ဖို့ ကို ရည်မှန်းရပါမယ်။ Module တွေက တတ်နိုင်သမျှ လွတ်လပ်စွာ ရည်တည်နိုင်သင့်တယ်။ ဥပမာ - Payment Module ကို ပြင်လိုက်တာနဲ့ Product module ကို လိုက်ပြင်နေရရင် ဒါ Coupling များနေတာပါ။ မကောင်းပါဘူး။",
+      "ဒီပုံမှာ ဆိုရင် dot လေးတွေက function ဆိုပါဆိုတော့ ။ loose coupling မှာ ဆိုရင် အများကြီး မှီခို မှု မရှိဘူး။ တနည်းပြောရင် တနေရာ ပဲ ရှိတယ်ပေါ့။ high coupling ဆိုရင် ဒီ function ထဲကို ဒီဘက်က data တွေ pass လုပ်ပေးနေရသည့် သဘော။ ဥပမာ MPU Payment ကနေ KBZ Payment ပြောင်းချင်လို့ Product ဘက်က accept payment နေရာမှာ ပြန်ပြင်ရတာမျိုး။ ဥပမာ"
+    ],
+    "language": "ts",
+    "code": "function payment(MPUPayment payment) {\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-3",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "စနစ်ကို လူသိန်းချီ သုံးနိုင်အောင် Server တွေ အများကြီး ခွဲထားမယ် (Microservices သုံးမယ်)၊ Auto-scaling လုပ်ထားမယ်ဆိုရင် Scalability အရမ်းကောင်းပါတယ်။ ဒါပေမဲ့ Server ဖိုး Cost (ကုန်ကျစရိတ်) တွေ တက်လာသလို၊ စနစ်က ရှုပ်ထွေးလာတဲ့အတွက် Maintain လုပ်ရခက်ခဲ ( Complexity ) လာပါတယ်။",
+      "၃။ Time-to-Market vs. Maintainability (မြန်မြန်ပြီးခြင်း နှင့် ပြုပြင်ထိန်းသိမ်းမှု)",
+      "Market ထဲကို အမြန်ရောက်အောင် Code တွေကို အမြန်ရေးမယ်၊ Design Pattern တွေ သိပ်မလိုက်နာဘူး၊ Test တွေ သိပ်မရေးဘူးဆိုရင် Time-to-Market မြန်ပါမယ်။ ဒါပေမဲ့ ရေရှည်မှာ Code တွေ ရှုပ်ပွပြီး ပြန်ပြင်ရ ခက်သွားတဲ့ Technical Debt တွေ တင်လာပါလိမ့်မယ်။",
+      "အောက်ပါ Diagram မှာ Tradeoff သဘောတရားကို ရှင်းပြထားပါတယ်။ တစ်ဖက်ကို ဆွဲတင်လိုက်ရင် ကျန်တစ်ဖက်က လျော့သွားတတ်တဲ့ သဘောပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph Tradeoff_Examples [Common Architectural Tradeoffs]\n        direction TB\n\n        T1[<b>Security vs Performance</b><br/>More encryption = Slower speed]\n        T2[<b>Reliability vs Cost</b><br/>More backup servers = Higher server bill]\n        T3[<b>Development Speed vs Quality</b><br/>Rush release = More bugs/Tech Debt]\n\n        style T1 fill:#ffdddd,stroke:#333\n        style T2 fill:#ddffdd,stroke:#333\n        style T3 fill:#ddddff,stroke:#333\n    end\n\n    Decision((Architectural<br/>Decision)) --> T1\n    Decision --> T2\n    Decision --> T3",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-4",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၂.၃ Architecture Documentation and Views (4+1 Model)",
+    "context": [
+      "အောက်ပါ Diagram မှာ Tradeoff သဘောတရားကို ရှင်းပြထားပါတယ်။ တစ်ဖက်ကို ဆွဲတင်လိုက်ရင် ကျန်တစ်ဖက်က လျော့သွားတတ်တဲ့ သဘောပါ။",
+      "၅.၂.၃ Architecture Documentation and Views (4+1 Model)",
+      "Software Architecture တစ်ခုကို တည်ဆောက်တဲ့အခါ \"မှန်ကန်တဲ့ Documentation ရှိဖို့\" ဆိုတာ အင်မတန် အရေးကြီးပါတယ်။ ဒါပေမဲ့ ပြဿနာက ရှုပ်ထွေးလှတဲ့ စနစ်ကြီးတစ်ခုလုံးကို Diagram တစ်ခုတည်းနဲ့ ပြည့်စုံအောင် ဆွဲပြဖို့ ဆိုတာ မဖြစ်နိုင်ပါဘူး။ အိမ်ဆောက်တဲ့အခါမှာတောင် အိမ်ရဲ့ အလှအပကို ပြတဲ့ ပုံစံ၊ ရေပိုက်သွယ်တန်းပုံ၊ မီးကြိုးသွယ်တန်းပုံ ဆိုပြီး ပုံစံမျိုးစုံ (Blueprints) လိုအပ်သလိုပါပဲ။",
+      "ဒီပြဿနာကို ဖြေရှင်းဖို့ Philippe Kruchten က 4+1 View Model ကို မိတ်ဆက်ခဲ့ပါတယ်။ သူက စနစ်တစ်ခုကို ရှုထောင့် (View) ၅ ခုခွဲပြီး ကြည့်ဖို့ အကြံပြုထားပါတယ်။ ဒါမှသာ သက်ဆိုင်ရာ Stakeholder တွေက မိမိတို့ လိုအပ်တဲ့ အချက်အလက်ကို ရှင်းရှင်းလင်းလင်း မြင်ရမှာ ဖြစ်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "mindmap\n  root((4+1 View Model))\n    Logical View\n      (End-Users)\n      ::icon(fa fa-user)\n      Functional Requirements\n    Process View\n      (Integrators)\n      ::icon(fa fa-cogs)\n      Non-Functional Requirements\n    Development View\n      (Programmers)\n      ::icon(fa fa-code)\n      Software Management\n    Physical View\n      (System Engineers)\n      ::icon(fa fa-server)\n      Topology & Deployment\n    Scenarios\n      (All Stakeholders)\n      ::icon(fa fa-check-circle)\n      Validation & Consistency",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-5",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "ဒါက အပေါ်စီးကနေ ကြည့်တာပါ။ ကျွန်တော်တို့ တည်ဆောက်မယ့် စနစ် (Software System) က ဘယ်သူတွေ (Users) နဲ့ ဆက်သွယ်နေလဲ၊ တခြား ဘယ် ပြင်ပစနစ် (External Systems) တွေနဲ့ ချိတ်ဆက်နေလဲ ဆိုတာ ဖော်ပြပါတယ်။",
+      "ဒီ Diagram ကို Technical မဟုတ်တဲ့ Project Manager တွေ၊ Business Owner တွေပါ နားလည်နိုင်ပါတယ်။",
+      "Banking System Example:",
+      "အောက်ကပုံမှာ User က Banking System ကို သုံးတယ်။ System ကနေ Email ပို့တာရယ်၊ ငွေစာရင်း သိမ်းထားတဲ့ Mainframe System ကြီးနဲ့ ချိတ်ဆက်တာရယ်ကို မြင်ရမှာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    %% Actors\n    Customer((Banking Customer<br/>Personal Banking User))\n\n    %% Main System\n    System[<b>Internet Banking System</b><br/>Allows customers to view accounts<br/>and make payments]\n\n    %% External Systems\n    EmailSys[E-mail System<br/>External System]\n    Mainframe[Mainframe Banking System<br/>External System]\n\n    %% Relationships\n    Customer -->|Uses| System\n    System -->|Sends e-mails using| EmailSys\n    System -->|Gets account info from| Mainframe\n\n    %% Styling\n    style System fill:#1168bd,stroke:#0b4884,color:white\n    style Customer fill:#08427b,stroke:#052e56,color:white\n    style EmailSys fill:#999999,stroke:#666666,color:white\n    style Mainframe fill:#999999,stroke:#666666,color:white",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-6",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Level 1 ကို Zoom-in လုပ်လိုက်ရင် တွေ့ရမယ့် အပိုင်းပါ။ ဒီနေရာမှာ \"Container\" ဆိုတာ Docker Container တစ်ခုတည်းကို ဆိုလိုတာ မဟုတ်ပါဘူး။ သီးခြား Run နိုင်တဲ့ Unit တွေ (Deployable Units) ကို ဆိုလိုတာပါ။",
+      "Developer တွေနဲ့ Architect တွေအတွက် အရေးကြီးဆုံး Level ဖြစ်ပါတယ်။",
+      "Banking System Example:",
+      "User က Web App သို့မဟုတ် Mobile App ကနေတဆင့် API ကို လှမ်းခေါ်မယ်။ API ကမှ Database နဲ့ Mainframe ကို ဆက်သွယ်ပြီး အလုပ်လုပ်မယ်ဆိုတာ တွေ့ရမှာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    User((Banking Customer))\n\n    subgraph Internet Banking System [Internet Banking System Containers]\n        direction TB\n        WebApp[<b>Web Application</b><br/>Java/Spring MVC<br/>Delivers static content and SPA]\n        MobileApp[<b>Mobile App</b><br/>Flutter<br/>Provides banking features]\n        API[<b>API Application</b><br/>Java/Spring Boot<br/>Provides funtionality via JSON/HTTPS]\n        DB[(<b>Database</b><br/>PostgreSQL<br/>Stores user registration info)]\n    end\n\n    EmailSys[E-mail System]\n    Mainframe[Mainframe Banking System]\n\n    %% Relationships\n    User -->|Visits| WebApp\n    User -->|Uses| MobileApp\n\n    WebApp -->|Makes API calls to| API\n    MobileApp -->|Makes API calls to| API\n\n    API -->|Reads/Writes| DB\n    API -->|Sends e-mail using| EmailSys\n    API -->|Uses| Mainframe\n\n    %% Styling\n    style API fill:#438dd5,stroke:#333,color:white\n    style WebApp fill:#438dd5,stroke:#333,color:white\n    style MobileApp fill:#438dd5,stroke:#333,color:white\n    style DB fill:#438dd5,stroke:#333,color:white",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-7",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Level 3: Component Diagram (The Internal Structure)",
+    "context": [
+      "Level 3: Component Diagram (The Internal Structure)",
+      "Container တစ်ခု (ဥပမာ - API Application) ကို ထပ်ပြီး Zoom-in လုပ်တာပါ။ Container အတွင်းမှာရှိတဲ့ အဓိက Component တွေ (Module တွေ၊ Controller တွေ၊ Service တွေ) ဘယ်လို ဖွဲ့စည်းထားလဲ ဆိုတာ ပြသပါတယ်။",
+      "ဒါကတော့ ကုဒ်ရေးမယ့် Developer တွေအတွက် သီးသန့် ရည်ရွယ်ပါတယ်။ \"Sign In Controller က Security Component ကို သုံးတယ်၊ ပြီးမှ Database ကို ဆက်သွယ်တယ်\" ဆိုတာမျိုး အသေးစိတ် မြင်ရပါမယ်။",
+      "Banking System Example (API Application အတွင်းပိုင်း):"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    %% External Containers\n    WebApp[Web Application]\n    MobileApp[Mobile App]\n    DB[(Database)]\n    Mainframe[Mainframe Banking System]\n\n    %% Internal Components of API Application\n    subgraph API_App [API Application]\n        SignIn[<b>Sign In Controller</b><br/>Allows users to sign in]\n        Accounts[<b>Accounts Summary Controller</b><br/>Provides account overview]\n        Security[<b>Security Component</b><br/>Handles Auth & Password Hashing]\n        MainframeFacade[<b>Mainframe Facade</b><br/>Interface to legacy system]\n    end\n\n    %% Relationships\n    WebApp -->|Uses JSON/HTTPS| SignIn\n    WebApp -->|Uses JSON/HTTPS| Accounts\n    MobileApp -->|Uses JSON/HTTPS| SignIn\n    MobileApp -->|Uses JSON/HTTPS| Accounts\n\n    SignIn -->|Uses| Security\n    Accounts -->|Uses| MainframeFacade\n\n    Security -->|Reads/Writes| DB\n    MainframeFacade -->|Uses| Mainframe\n\n    %% Styling\n    style SignIn fill:#85bbf0,stroke:#5d82a8\n    style Accounts fill:#85bbf0,stroke:#5d82a8\n    style Security fill:#85bbf0,stroke:#5d82a8\n    style MainframeFacade fill:#85bbf0,stroke:#5d82a8",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-8",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "ဥပမာ:",
+      "သင့်ကုမ္ပဏီမှာ Frontend Team နဲ့ Backend Team ဆိုပြီး သီးသန့်ခွဲထားရင်၊ သင့်ရဲ့ Software Architecture ကလည်း Frontend နဲ့ Backend တိတိကျကျ ကွဲနေတဲ့ ပုံစံ ဖြစ်လာပါလိမ့်မယ်။ အကယ်၍ Team ၄ ခု ခွဲပြီး Compiler တစ်ခုကို ရေးခိုင်းရင်၊ 4-pass Compiler ထွက်လာဖို့ သေချာသလောက် ရှိပါတယ်။",
+      "Architect တစ်ယောက်အနေနဲ့ ဘာလုပ်ရမလဲ:",
+      "လိုချင်တဲ့ Architecture ပုံစံ (ဥပမာ - Microservices) ရှိရင်၊ အဖွဲ့အစည်း ဖွဲ့စည်းပုံကို အရင် ပြောင်းလဲဖို့ လိုကောင်း လိုပါလိမ့်မယ်။ ဒါကို Inverse Conway Maneuver လို့ ခေါ်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph Organization\n        TeamA[Team A] <-->|Communicates| TeamB[Team B]\n    end\n\n    subgraph Software_Architecture\n        ModuleA[Module A] <-->|API Calls| ModuleB[Module B]\n    end\n\n    Organization -.->|Influences| Software_Architecture\n\n    style TeamA fill:#f9f,stroke:#333\n    style TeamB fill:#f9f,stroke:#333\n    style ModuleA fill:#9ff,stroke:#333\n    style ModuleB fill:#9ff,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-9",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၂. CAP Theorem (Distributed Systems Dilemma)",
+    "context": [
+      "လိုချင်တဲ့ Architecture ပုံစံ (ဥပမာ - Microservices) ရှိရင်၊ အဖွဲ့အစည်း ဖွဲ့စည်းပုံကို အရင် ပြောင်းလဲဖို့ လိုကောင်း လိုပါလိမ့်မယ်။ ဒါကို Inverse Conway Maneuver လို့ ခေါ်ပါတယ်။",
+      "၂. CAP Theorem (Distributed Systems Dilemma)",
+      "Distributed Data Store (Server အများကြီးဖြန့်ထားတဲ့ Database) တစ်ခုမှာ အောက်ပါ ၃ ချက်ထဲက ၂ ချက် ကိုသာ တစ်ပြိုင်နက် ရရှိနိုင်ပါတယ်။ ၃ ခုလုံး တပြိုင်နက် ရဖို့ မဖြစ်နိုင်ပါဘူး။",
+      "Distributed System ဆိုတာ Network ပေါ်မှာ တည်ဆောက်ထားတာဖြစ်လို့ Network ပြတ်တောက်မှု (Partition) က ရှောင်လွှဲမရပါဘူး။ ဒါကြောင့် (P) က မဖြစ်မနေ ယူရမှာ ဖြစ်ပြီး ၊ ကျန်တဲ့ (C) နဲ့ (A) ထဲက တစ်ခုကိုပဲ ရွေးချယ်ခွင့် ရှိပါတော့တယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    C((Consistency)) --- A((Availability))\n    A --- P((Partition Tolerance))\n    P --- C\n\n    linkStyle 0 stroke:red,stroke-width:4px;\n    linkStyle 1 stroke:green,stroke-width:4px;\n    linkStyle 2 stroke:blue,stroke-width:4px;",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-10",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၃.၁ Layered Architecture (N-Tier)",
+    "context": [
+      "၅.၃ Classic Architectural Patterns",
+      "Architecture တစ်ခုကို အစကနေ အသစ်တီထွင်စရာ မလိုပါဘူး။ နှစ်ပေါင်းများစွာကတည်းက သက်သေပြပြီးသား Classic Patterns တွေကို နားလည်ထားရင် ကိုယ့် System နဲ့ ကိုက်ညီမယ့် ပုံစံကို ရွေးချယ်နိုင်မှာ ဖြစ်ပါတယ်။",
+      "၅.၃.၁ Layered Architecture (N-Tier)",
+      "Software ကို အလွှာ (Layers) တွေအဖြစ် ဖွဲ့စည်းတည်ဆောက်တာ ဖြစ်ပါတယ်။ ဒါက အသုံးအများဆုံးနဲ့ \"General Purpose\" အဖြစ်ဆုံး Pattern ပါ။ အလွှာတစ်ခုဟာ သူ့အောက်က အလွှာကိုပဲ ဆက်သွယ်ခွင့်ရှိပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    A[Presentation Layer<br/>UI/API] --> B[Business Logic Layer<br/>Domain Rules]\n    B --> C[Persistence Layer<br/>Database Access]\n    C --> D[Database<br/>SQL/NoSQL]\n\n    style A fill:#f9f,stroke:#333\n    style B fill:#bbf,stroke:#333\n    style C fill:#bfb,stroke:#333\n    style D fill:#ddd,stroke:#333",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-11",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၃.၂ Model-View-Controller (MVC) family",
+    "context": [
+      "Software ကို အလွှာ (Layers) တွေအဖြစ် ဖွဲ့စည်းတည်ဆောက်တာ ဖြစ်ပါတယ်။ ဒါက အသုံးအများဆုံးနဲ့ \"General Purpose\" အဖြစ်ဆုံး Pattern ပါ။ အလွှာတစ်ခုဟာ သူ့အောက်က အလွှာကိုပဲ ဆက်သွယ်ခွင့်ရှိပါတယ်။",
+      "Tradeoffs:",
+      "၅.၃.၂ Model-View-Controller (MVC) family",
+      "Interactive Application တွေ (Web & Mobile) အတွက် Standard ဖြစ်နေတဲ့ Pattern ပါ။ UI နဲ့ Logic ကို ရောမနေအောင် ခွဲထုတ်ထားတာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n    participant User\n    participant View\n    participant Controller\n    participant Model\n\n    User->>View: 1. User Action (Click)\n    View->>Controller: 2. Send Input\n    Controller->>Model: 3. Update Data\n    Model-->>View: 4. Notify Change / Data Update\n    View->>User: 5. Render New UI",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-12",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၃.၃ Microkernel Architecture (Plug-in Architecture)",
+    "context": [
+      "Variants:",
+      "၅.၃.၃ Microkernel Architecture (Plug-in Architecture)",
+      "ဒါက System ကို Core နဲ့ Plug-in ဆိုပြီး ခွဲခြားတည်ဆောက်တာပါ။ အပို Feature တွေကို System ပြင်စရာမလိုဘဲ ထပ်ထည့်ချင်တဲ့အခါ သုံးပါတယ်။",
+      "ဥပမာ: VS Code, Eclipse, Chrome Browser (Extensions), Wordpress."
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph System\n        Core[<b>Core System</b><br/>Minimal Logic]\n        P1[Plugin A]\n        P2[Plugin B]\n        P3[Plugin C]\n    end\n\n    P1 <-->|API| Core\n    P2 <-->|API| Core\n    P3 <-->|API| Core\n\n    style Core fill:#ff9999,stroke:#333,stroke-width:2px",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-13",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၃.၄ Pipe-and-Filter Architecture",
+    "context": [
+      "Tradeoffs:",
+      "၅.၃.၄ Pipe-and-Filter Architecture",
+      "Data တွေကို အဆင့်ဆင့် ပြုပြင်ပြောင်းလဲဖို့ လိုအပ်တဲ့အခါ သုံးပါတယ်။ Component တစ်ခုရဲ့ Output ဟာ နောက် Component တစ်ခုရဲ့ Input ဖြစ်သွားပါတယ်။",
+      "ဥပမာ: Compiler (Lexer -> Parser -> Semantic Analyzer -> Code Generator)၊ Unix Commands ( ls | grep | sort )၊ Video Processing Tools။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n    Source((Input)) -->|Raw Data| Filter1[Filter A]\n    Filter1 -->|Transformed| Filter2[Filter B]\n    Filter2 -->|Transformed| Filter3[Filter C]\n    Filter3 -->|Final Data| Sink((Output))\n\n    style Filter1 fill:#cfc,stroke:#333\n    style Filter2 fill:#cfc,stroke:#333\n    style Filter3 fill:#cfc,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-14",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၄.၁ Microservices Architecture",
+    "context": [
+      "၅.၄ Modern Architectural Styles",
+      "Cloud Computing နဲ့ Distributed System တွေ ခေတ်စားလာတာနဲ့အမျှ Architecture ပုံစံတွေကလည်း ပိုပြီး Flexible ဖြစ်လာပါတယ်။ Monolithic ကနေ ခွဲထွက်ပြီး Scale လုပ်လို့ကောင်းမယ့် ပုံစံတွေကို ဦးစားပေးလာကြပါတယ်။",
+      "၅.၄.၁ Microservices Architecture",
+      "Application ကြီးတစ်ခုလုံးကို Monolith တည်ဆောက်မယ့်အစား၊ သေးငယ်ပြီး လွတ်လပ်တဲ့ Service လေးတွေအဖြစ် ခွဲခြမ်းတည်ဆောက်တာ ဖြစ်ပါတယ်။ Service တစ်ခုချင်းစီဟာ Specific Business Capability (ဥပမာ - Order, Payment, User) တစ်ခုကိုပဲ တာဝန်ယူပြီး၊ သူတို့ရဲ့ ကိုယ်ပိုင် Database သီးသန့် ရှိတတ်ကြပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    Client[Client Apps] --> GW[API Gateway]\n\n    subgraph Backend [Microservices Ecosystem]\n        direction TB\n        GW --> S1[<b>User Service</b><br/>Node.js]\n        GW --> S2[<b>Order Service</b><br/>Java]\n        GW --> S3[<b>Payment Service</b><br/>Go]\n\n        S1 --- DB1[(User DB)]\n        S2 --- DB2[(Order DB)]\n        S3 --- DB3[(Payment DB)]\n\n        S2 -.->|Sync/Async Calls| S3\n    end\n\n    style GW fill:#f96,stroke:#333\n    style S1 fill:#69c,stroke:#333\n    style S2 fill:#69c,stroke:#333\n    style S3 fill:#69c,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-15",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၄.၂ Event-Driven Architecture (EDA)",
+    "context": [
+      "Application ကြီးတစ်ခုလုံးကို Monolith တည်ဆောက်မယ့်အစား၊ သေးငယ်ပြီး လွတ်လပ်တဲ့ Service လေးတွေအဖြစ် ခွဲခြမ်းတည်ဆောက်တာ ဖြစ်ပါတယ်။ Service တစ်ခုချင်းစီဟာ Specific Business Capability (ဥပမာ - Order, Payment, User) တစ်ခုကိုပဲ တာဝန်ယူပြီး၊ သူတို့ရဲ့ ကိုယ်ပိုင် Database သီးသန့် ရှိတတ်ကြပါတယ်။",
+      "Tradeoffs:",
+      "၅.၄.၂ Event-Driven Architecture (EDA)",
+      "Component တွေက တိုက်ရိုက် ချိတ်ဆက် (Direct Call) မလုပ်ဘဲ၊ Event တွေကို  Publish နဲ့ Subscribe ဖြင့် သွယ်ဝိုက် ဆက်သွယ်ကြပါတယ်။ \"Order တက်လာပြီ\" လို့ အော်ပြောလိုက်ရင် (Event)၊ သက်ဆိုင်ရာ Payment Service က ကြားပြီး ငွေဖြတ်မယ်၊ Inventory Service က ကြားပြီး ပစ္စည်းစာရင်း ဖြတ်မယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n    Producer[Order Service<br/>Producer] -- Event: OrderCreated --> Broker((Event Broker<br/>Kafka/RabbitMQ))\n\n    Broker -- Pushes to --> Con1[Payment Service<br/>Consumer A]\n    Broker -- Pushes to --> Con2[Inventory Service<br/>Consumer B]\n    Broker -- Pushes to --> Con3[Notification Service<br/>Consumer C]\n\n    style Broker fill:#ff9,stroke:#333,stroke-width:2px",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-16",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၄.၄ Service-Oriented Architecture (SOA)",
+    "context": [
+      "Tradeoffs:",
+      "၅.၄.၄ Service-Oriented Architecture (SOA)",
+      "Microservices ရဲ့ ရှေ့ပြေးပုံစံလို့ ပြောလို့ရပေမယ့် ကွာခြားချက်ရှိပါတယ်။ SOA က လုပ်ငန်းကြီးတစ်ခုလုံး (Enterprise) မှာရှိတဲ့ မတူညီတဲ့ System ကြီးတွေ (Billing System, HR System) ကို Enterprise Service Bus (ESB) ကနေတဆင့် ချိတ်ဆက်ပြီး ပြန်လည်အသုံးပြုဖို့ (Reusability) ကို ဦးစားပေးပါတယ်။",
+      "ဒီပုံမှာ ကြည့်လိုက်ရင် Billing System က Java နဲ့ ရေးထားမယ်၊ HR System က ရှေးဟောင်း Mainframe ကြီး ဖြစ်မယ်။ ဒါပေမဲ့ ESB က ကြားခံပြီး \"စကားပြန် (Translator)\" အဖြစ် ဆောင်ရွက်ပေးတဲ့အတွက် သူတို့အချင်းချင်း ချိတ်ဆက်လို့ ရသွားပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    Consumer[Consumer Apps<br/>Web / Mobile / Partners]\n\n    subgraph Middleware [The Smart Pipe]\n        ESB{{Enterprise Service Bus ESB<br/>Routing, Transformation, Security}}\n    end\n\n    subgraph Enterprise_Services [Backend Systems]\n        S1[Billing System<br/>Java / SOAP]\n        S2[Legacy HR System<br/>Mainframe]\n        S3[CRM System<br/>.NET / REST]\n    end\n\n    Consumer -->|Unified Request| ESB\n    ESB <-->|Translates Protocol| S1\n    ESB <-->|Translates Protocol| S2\n    ESB <-->|Translates Protocol| S3\n\n    style ESB fill:#f96,stroke:#333,stroke-width:4px\n    style S1 fill:#ddd,stroke:#333\n    style S2 fill:#ddd,stroke:#333\n    style S3 fill:#ddd,stroke:#333",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-17",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "1. S - Single Responsibility Principle (SRP)",
+      "Class တစ်ခုတွင် တာဝန်တစ်ခုတည်းသာ ရှိသင့်ပါသည်။ တာဝန်များနေလျှင် Class သည် ကြီးမားရှုပ်ထွေးပြီး ပြင်ဆင်ရ ခက်ခဲတတ်ပါသည်။",
+      "ဥပမာ: User အချက်အလက်ကို သိမ်းဆည်းခြင်းနှင့် Email ပို့ခြင်းကို Class တစ်ခုတည်းတွင် မလုပ်သင့်ပါ။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// Bad: One class doing two things\nclass UserService {\n    public void registerUser(String username) {\n        // Save user logic...\n        // Send email logic...\n    }\n}\n\n// Good: Split responsibilities\nclass UserRepository {\n    public void save(String username) { /* Save logic */ }\n}\n\nclass EmailService {\n    public void sendWelcomeEmail(String username) { /* Email logic */ }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-18",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Class တစ်ခုတွင် တာဝန်တစ်ခုတည်းသာ ရှိသင့်ပါသည်။ တာဝန်များနေလျှင် Class သည် ကြီးမားရှုပ်ထွေးပြီး ပြင်ဆင်ရ ခက်ခဲတတ်ပါသည်။",
+      "ဥပမာ: User အချက်အလက်ကို သိမ်းဆည်းခြင်းနှင့် Email ပို့ခြင်းကို Class တစ်ခုတည်းတွင် မလုပ်သင့်ပါ။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// Bad\nclass UserService {\n    registerUser(username: string): void {\n        // Save user logic...\n        // Send email logic...\n    }\n}\n\n// Good\nclass UserRepository {\n    save(username: string): void { /* Save logic */ }\n}\n\nclass EmailService {\n    sendWelcomeEmail(username: string): void { /* Email logic */ }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-19",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "2. O - Open/Closed Principle (OCP)",
+      "Feature အသစ်ထည့်လိုလျှင် ရှိပြီးသား Code အဟောင်းကို သွားမပြင်ဘဲ၊ Code အသစ် ထပ်ဖြည့်သည့် နည်းဖြင့် လုပ်ဆောင်နိုင်ရပါမည်။",
+      "ဥပမာ: Payment စနစ်တွင် Payment Method အသစ်တိုးတိုင်း PaymentProcessor class ကို လိုက်ပြင်နေရလျှင် OCP ကို ချိုးဖောက်ရာ ရောက်ပါသည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// Good: Use Interface (Polymorphism)\ninterface PaymentMethod {\n    void pay(double amount);\n}\n\nclass MPUPayment implements PaymentMethod {\n    public void pay(double amount) { System.out.println(\"Paid via MPU\"); }\n}\n\nclass WavePayment implements PaymentMethod {\n    public void pay(double amount) { System.out.println(\"Paid via Wave\"); }\n}\n\nclass PaymentProcessor {\n    // New payment methods can be added without changing this code\n    public void process(PaymentMethod method, double amount) {\n        method.pay(amount);\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-20",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Feature အသစ်ထည့်လိုလျှင် ရှိပြီးသား Code အဟောင်းကို သွားမပြင်ဘဲ၊ Code အသစ် ထပ်ဖြည့်သည့် နည်းဖြင့် လုပ်ဆောင်နိုင်ရပါမည်။",
+      "ဥပမာ: Payment စနစ်တွင် Payment Method အသစ်တိုးတိုင်း PaymentProcessor class ကို လိုက်ပြင်နေရလျှင် OCP ကို ချိုးဖောက်ရာ ရောက်ပါသည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// Good\ninterface PaymentMethod {\n    pay(amount: number): void;\n}\n\nclass MPUPayment implements PaymentMethod {\n    pay(amount: number): void { console.log(\"Paid via MPU\"); }\n}\n\nclass WavePayment implements PaymentMethod {\n    pay(amount: number): void { console.log(\"Paid via Wave\"); }\n}\n\nclass PaymentProcessor {\n    process(method: PaymentMethod, amount: number): void {\n        method.pay(amount);\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-21",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "4. I - Interface Segregation Principle (ISP)",
+      "လိုအပ်သည်ထက် ပိုပါနေသည့် Interface ကြီး (Fat Interface) တစ်ခုတည်း လုပ်မည့်အစား၊ သေးငယ်တိကျသည့် Interface လေးများ ခွဲထုတ်သင့်ပါသည်။",
+      "ဥပမာ: Worker interface တွင် work() နှင့် eat() ပါဝင်သည်။ Robot က Worker ကို implement လုပ်လျှင် eat() method က အပိုဖြစ်နေပြီး မလိုအပ်ဘဲ implement လုပ်ပေးနေရသည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// Bad\ninterface Worker {\n    void work();\n    void eat();\n}\n\n// Good: Segregate Interfaces\ninterface Workable {\n    void work();\n}\n\ninterface Eatable {\n    void eat();\n}\n\nclass Robot implements Workable {\n    public void work() { /* Working */ }\n    // No need to implement eat()\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-22",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "လိုအပ်သည်ထက် ပိုပါနေသည့် Interface ကြီး (Fat Interface) တစ်ခုတည်း လုပ်မည့်အစား၊ သေးငယ်တိကျသည့် Interface လေးများ ခွဲထုတ်သင့်ပါသည်။",
+      "ဥပမာ: Worker interface တွင် work() နှင့် eat() ပါဝင်သည်။ Robot က Worker ကို implement လုပ်လျှင် eat() method က အပိုဖြစ်နေပြီး မလိုအပ်ဘဲ implement လုပ်ပေးနေရသည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// Bad\ninterface Worker {\n    work(): void;\n    eat(): void;\n}\n\n// Good\ninterface Workable {\n    work(): void;\n}\n\ninterface Eatable {\n    eat(): void;\n}\n\nclass Robot implements Workable {\n    work(): void { /* Working */ }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-23",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "5. D - Dependency Inversion Principle (DIP)",
+      "High-level Module များက Low-level Module များကို တိုက်ရိုက် မှီခိုမည့်အစား၊ Interface များကိုသာ မှီခိုသင့်ပါသည်။",
+      "ဥပမာ: Switch (High-level) သည် LightBulb (Low-level) ကို တိုက်ရိုက် သိစရာ မလိုပါ။ SwitchableDevice ဆိုသည့် Interface ကိုသာ သိလျှင် မီးသီးပဲဖြစ်ဖြစ်၊ ပန်ကာပဲဖြစ်ဖြစ် ဖွင့်/ပိတ် လုပ်နိုင်ပါမည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// Abstraction\ninterface Switchable {\n    void turnOn();\n    void turnOff();\n}\n\n// Low-level module\nclass LightBulb implements Switchable {\n    public void turnOn() { /* Light on */ }\n    public void turnOff() { /* Light off */ }\n}\n\n// High-level module\nclass ElectricSwitch {\n    private Switchable device; // Depends on interface, not specific class\n\n    public ElectricSwitch(Switchable device) {\n        this.device = device;\n    }\n\n    public void press() {\n        device.turnOn();\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-24",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "High-level Module များက Low-level Module များကို တိုက်ရိုက် မှီခိုမည့်အစား၊ Interface များကိုသာ မှီခိုသင့်ပါသည်။",
+      "ဥပမာ: Switch (High-level) သည် LightBulb (Low-level) ကို တိုက်ရိုက် သိစရာ မလိုပါ။ SwitchableDevice ဆိုသည့် Interface ကိုသာ သိလျှင် မီးသီးပဲဖြစ်ဖြစ်၊ ပန်ကာပဲဖြစ်ဖြစ် ဖွင့်/ပိတ် လုပ်နိုင်ပါမည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// Abstraction\ninterface Switchable {\n    turnOn(): void;\n    turnOff(): void;\n}\n\n// Low-level module\nclass LightBulb implements Switchable {\n    turnOn(): void { /* Light on */ }\n    turnOff(): void { /* Light off */ }\n}\n\n// High-level module\nclass ElectricSwitch {\n    private device: Switchable;\n\n    constructor(device: Switchable) {\n        this.device = device;\n    }\n\n    press(): void {\n        this.device.turnOn();\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-25",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၅.၃ Law of Demeter (Principle of Least Knowledge)",
+    "context": [
+      "၅.၅.၃ Law of Demeter (Principle of Least Knowledge)",
+      "Object တစ်ခုသည် ၎င်းနှင့် တိုက်ရိုက် ဆက်စပ်နေသော Object များကိုသာ ဆက်သွယ်သင့်ပါသည်။ \"သူစိမ်းများ\" နှင့် စကားမပြောသင့်ပါ။ ၎င်းသည် Coupling ကို လျှော့ချပေးပါသည်။",
+      "ရိုးရှင်းစွာမှတ်ရန်မှာ - \"ကွင်း (dot) တစ်ခုထက် ပိုမဆက်ပါနှင့်\" ဟု ဆိုလိုခြင်း ဖြစ်သည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// Bad: Law of Demeter Violation\norder.getCustomer().getAddress().getCity();\n\n// Good\norder.getCustomerCity();",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-26",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Object တစ်ခုသည် ၎င်းနှင့် တိုက်ရိုက် ဆက်စပ်နေသော Object များကိုသာ ဆက်သွယ်သင့်ပါသည်။ \"သူစိမ်းများ\" နှင့် စကားမပြောသင့်ပါ။ ၎င်းသည် Coupling ကို လျှော့ချပေးပါသည်။",
+      "ရိုးရှင်းစွာမှတ်ရန်မှာ - \"ကွင်း (dot) တစ်ခုထက် ပိုမဆက်ပါနှင့်\" ဟု ဆိုလိုခြင်း ဖြစ်သည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// Bad\norder.customer.address.city;\n\n// Good\norder.getCustomerCity();",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-27",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "OOP တွင် Inheritance (Extends) ကို အလွန်အကျွံ သုံးခြင်းသည် Code ကို ပြောင်းလွယ်ပြင်လွယ် မရှိဖြစ်စေတတ်ပါသည်။ ထို့ကြောင့် ဖြစ်နိုင်လျှင် Composition (Has-A relationship) ကို ဦးစားပေး အသုံးပြုသင့်သည်။",
+      "ပြဿနာ: Dog class က Animal ကို extend လုပ်ထားသည်။ RobotDog ပေါ်လာသောအခါ Animal ကို extend လုပ်လျှင် eat() ပါလာမည် (Robot က အစာမစားပါ)။ Machine ကို extend လုပ်လျှင် bark() မပါလာပါ။ Inheritance ဖြင့် ဖြေရှင်းရန် ခက်ခဲပါသည်။",
+      "ဖြေရှင်းနည်း (Composition): barkingBehavior နှင့် eatingBehavior ကို Component များအဖြစ် ခွဲထုတ်ပြီး လိုအပ်သလို တွဲစပ်အသုံးပြုခြင်းက ပိုမို ကောင်းမွန်ပါသည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "class Dog {\n    private BarkingBehavior barker = new BarkingBehavior();\n    private EatingBehavior eater = new EatingBehavior();\n\n    public void bark() { barker.bark(); }\n    public void eat() { eater.eat(); }\n}\n\nclass RobotDog {\n    private BarkingBehavior barker = new BarkingBehavior();\n    // No EatingBehavior\n\n    public void bark() { barker.bark(); }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-28",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "ပြဿနာ: Dog class က Animal ကို extend လုပ်ထားသည်။ RobotDog ပေါ်လာသောအခါ Animal ကို extend လုပ်လျှင် eat() ပါလာမည် (Robot က အစာမစားပါ)။ Machine ကို extend လုပ်လျှင် bark() မပါလာပါ။ Inheritance ဖြင့် ဖြေရှင်းရန် ခက်ခဲပါသည်။",
+      "ဖြေရှင်းနည်း (Composition): barkingBehavior နှင့် eatingBehavior ကို Component များအဖြစ် ခွဲထုတ်ပြီး လိုအပ်သလို တွဲစပ်အသုံးပြုခြင်းက ပိုမို ကောင်းမွန်ပါသည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "class Dog {\n    private barker = new BarkingBehavior();\n    private eater = new EatingBehavior();\n\n    bark() { this.barker.bark(); }\n    eat() { this.eater.eat(); }\n}\n\nclass RobotDog {\n    private barker = new BarkingBehavior();\n    // No EatingBehavior\n\n    bark() { this.barker.bark(); }\n}",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-29",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)",
+    "context": [
+      "ပြဿနာ: အကယ်၍ ကျွန်ုပ်တို့က Paladin (ဓားလည်းခုတ်သည်၊ မှော်လည်းသုံးသည်) ဆိုသော Character အသစ် ထပ်ထည့်ချင်လျှင် ဘာလုပ်မည်နည်း။",
+      "Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)",
+      "Inheritance (Is-A) အစား Composition (Has-A) ကို သုံးပါမည်။ Character သည် Warrior ဖြစ်သည် (Is-A) ဟု မသတ်မှတ်ဘဲ၊ Character တွင် လက်နက် ရှိသည် (Has-A) ဟု သတ်မှတ်ပါမည်။ တိုက်ခိုက်ခြင်း အပြုအမူ (Attack Behavior) ကို သီးခြား Class များအဖြစ် ခွဲထုတ်လိုက်ပါမည်။",
+      "Java:"
+    ],
+    "language": "java",
+    "code": "// 1. Define the behavior interface\ninterface AttackStrategy {\n    void attack();\n}\n\n// 2. Implement specific behaviors\nclass SwordAttack implements AttackStrategy {\n    public void attack() { System.out.println(\"Swinging a sword!\"); }\n}\n\nclass MagicAttack implements AttackStrategy {\n    public void attack() { System.out.println(\"Casting a fireball!\"); }\n}\n\nclass BowAttack implements AttackStrategy {\n    public void attack() { System.out.println(\"Shooting an arrow!\"); }\n}\n\n// 3. The main Character class uses Composition\nclass GameCharacter {\n    private AttackStrategy attackStrategy;\n\n    // Inject behavior via constructor\n    public GameCharacter(AttackStrategy attackStrategy) {\n        this.attackStrategy = attackStrategy;\n    }\n\n    // Key Benefit: We can change behavior at runtime!\n    public void setWeapon(AttackStrategy newStrategy) {\n        this.attackStrategy = newStrategy;\n    }\n\n    public void fight() {\n        this.attackStrategy.attack();\n    }\n}\n\n// Usage\npublic class Main {\n    public static void main(String[] args) {\n        // Create a Warrior\n        GameCharacter player = new GameCharacter(new SwordAttack());\n        player.fight(); // Output: Swinging a sword!\n\n        // Suddenly, the player picks up a magic staff\n        System.out.println(\"Player picks up a staff...\");\n        player.setWeapon(new MagicAttack());\n        player.fight(); // Output: Casting a fireball!\n\n        // This dynamic change is impossible with strict Inheritance\n    }\n}",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-30",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)",
+    "context": [
+      "Composition ဖြင့် ချဉ်းကပ်ခြင်း (The Good Way)",
+      "Inheritance (Is-A) အစား Composition (Has-A) ကို သုံးပါမည်။ Character သည် Warrior ဖြစ်သည် (Is-A) ဟု မသတ်မှတ်ဘဲ၊ Character တွင် လက်နက် ရှိသည် (Has-A) ဟု သတ်မှတ်ပါမည်။ တိုက်ခိုက်ခြင်း အပြုအမူ (Attack Behavior) ကို သီးခြား Class များအဖြစ် ခွဲထုတ်လိုက်ပါမည်။",
+      "Java:",
+      "TypeScript:"
+    ],
+    "language": "ts",
+    "code": "// 1. Define the behavior interface\ninterface AttackStrategy {\n    attack(): void;\n}\n\n// 2. Implement specific behaviors\nclass SwordAttack implements AttackStrategy {\n    attack(): void { console.log(\"Swinging a sword!\"); }\n}\n\nclass MagicAttack implements AttackStrategy {\n    attack(): void { console.log(\"Casting a fireball!\"); }\n}\n\nclass BowAttack implements AttackStrategy {\n    attack(): void { console.log(\"Shooting an arrow!\"); }\n}\n\n// 3. The main Character class uses Composition\nclass GameCharacter {\n    private attackStrategy: AttackStrategy;\n\n    // Inject behavior via constructor\n    constructor(attackStrategy: AttackStrategy) {\n        this.attackStrategy = attackStrategy;\n    }\n\n    // Key Benefit: We can change behavior at runtime!\n    setWeapon(newStrategy: AttackStrategy): void {\n        this.attackStrategy = newStrategy;\n    }\n\n    fight(): void {\n        this.attackStrategy.attack();\n    }\n}\n\n// Usage\n// Create a Warrior\nconst player = new GameCharacter(new SwordAttack());\nplayer.fight(); // Output: Swinging a sword!\n\n// Suddenly, the player picks up a magic staff\nconsole.log(\"Player picks up a staff...\");\nplayer.setWeapon(new MagicAttack());\nplayer.fight(); //",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-31",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၁။ Class Diagram:",
+    "context": [
+      "C4 Model မပေါ်ခင်က UML ဟာ Industry Standard ဖြစ်ခဲ့ပြီး၊ ယနေ့ထက်ထိ Class Diagram နဲ့ Sequence Diagram တွေကို တွင်ကျယ်စွာ သုံးနေဆဲ ဖြစ်ပါတယ်။",
+      "အဓိက UML Diagram အချို့:",
+      "၁။ Class Diagram:",
+      "စနစ်ရဲ့ Static Structure ကို ဖော်ပြပါတယ်။ Class တွေ၊ Attribute တွေ၊ Method တွေ၊ နဲ့ သူတို့ကြားက ဆက်ဆံရေး (Inheritance, Composition) တွေကို ပြသပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "classDiagram\n    class Animal {\n        +String name\n        +makeSound()\n    }\n    class Dog {\n        +bark()\n    }\n    class Cat {\n        +meow()\n    }\n    Animal <|-- Dog : Inheritance\n    Animal <|-- Cat : Inheritance",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-32",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၂။ Sequence Diagram:",
+    "context": [
+      "၁။ Class Diagram:",
+      "စနစ်ရဲ့ Static Structure ကို ဖော်ပြပါတယ်။ Class တွေ၊ Attribute တွေ၊ Method တွေ၊ နဲ့ သူတို့ကြားက ဆက်ဆံရေး (Inheritance, Composition) တွေကို ပြသပါတယ်။",
+      "၂။ Sequence Diagram:",
+      "Object တွေဟာ အချိန်နဲ့အမျှ Message တွေ ပေးပို့ခြင်းဖြင့် ဘယ်လို အပြန်အလှန် ဆက်သွယ်သလဲ (Interaction) ဆိုတာကို ဖော်ပြပါတယ်။ Logic Flow ကို နားလည်ဖို့ အလွန်အသုံးဝင်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n    participant User\n    participant WebServer\n    participant Database\n\n    User->>WebServer: 1. GET /users/1\n    WebServer->>Database: 2. SELECT * FROM users WHERE id=1\n    Database-->>WebServer: 3. Return User Data\n    WebServer-->>User: 4. Return HTML Page",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-33",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၃။ Use Case Diagram:",
+    "context": [
+      "၂။ Sequence Diagram:",
+      "Object တွေဟာ အချိန်နဲ့အမျှ Message တွေ ပေးပို့ခြင်းဖြင့် ဘယ်လို အပြန်အလှန် ဆက်သွယ်သလဲ (Interaction) ဆိုတာကို ဖော်ပြပါတယ်။ Logic Flow ကို နားလည်ဖို့ အလွန်အသုံးဝင်ပါတယ်။",
+      "၃။ Use Case Diagram:",
+      "Actor (သုံးစွဲသူ) တွေနဲ့ Use Case (စနစ်ရဲ့ လုပ်ဆောင်ချက်) တွေကြားက ဆက်ဆံရေးကို ဖော်ပြပါတယ်။ Requirement တွေကို မြင်သာအောင် ပြသရာမှာ သုံးပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    User([Customer])\n    Server([Bank Server])\n\n    subgraph ATM_System [ATM System]\n        UC1((Login))\n        UC2((Check Balance))\n        UC3((Withdraw Cash))\n        UC4((Verify PIN))\n        UC5((Print Receipt))\n    end\n\n    User --> UC1\n    User --> UC2\n    User --> UC3\n\n    UC1 -.->|include| UC4\n    UC3 -.->|extend| UC5\n\n    UC1 --> Server\n    UC3 --> Server\n\n    style UC1 fill:#e1f5ff,stroke:#333,stroke-width:2px\n    style UC2 fill:#e1f5ff,stroke:#333,stroke-width:2px\n    style UC3 fill:#e1f5ff,stroke:#333,stroke-width:2px\n    style UC4 fill:#fff4e1,stroke:#333,stroke-width:2px\n    style UC5 fill:#fff4e1,stroke:#333,stroke-width:2px\n    style User fill:#90EE90,stroke:#333,stroke-width:2px\n    style Server fill:#FFB6C1,stroke:#333,stroke-width:2px",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-34",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Developer တွေနဲ့ Business Experts (Domain Experts) တွေကြားမှာ နားလည်မှု လွဲမှားခြင်းက Software Project တွေ ကျဆုံးရတဲ့ အဓိက အကြောင်းရင်းပါ။",
+      "၂။ Bounded Context (နယ်နိမိတ်သတ်မှတ်ခြင်း)",
+      "စကားလုံးတစ်လုံးဟာ နေရာတိုင်းမှာ အဓိပ္ပါယ် မတူနိုင်ပါဘူး။ Context (အခြေအနေ) ပေါ်မူတည်ပြီး အဓိပ္ပာယ် ကွဲပြားနိုင်ပါတယ်။ Bounded Context ဆိုတာ ဒီစကားလုံးတွေရဲ့ အဓိပ္ပာယ် သတ်မှတ်ချက် မတူညီတော့တဲ့ နယ်နိမိတ်မျဉ်း ဖြစ်ပါတယ်။",
+      "အောက်ပါ Diagram မှာ E-commerce System တစ်ခုရဲ့ Context နှစ်ခု ကွဲပြားပုံကို ကြည့်ပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n    subgraph Sales_Context [Sales Bounded Context]\n        direction TB\n        SP[<b>Product</b><br/>id, name, price<br/>description]\n        Order[<b>Order</b><br/>orderId, totalAmount]\n        SP --> Order\n    end\n\n    subgraph Shipping_Context [Shipping Bounded Context]\n        direction TB\n        ShP[<b>Product</b><br/>sku, weight<br/>dimensions]\n        Shipment[<b>Shipment</b><br/>trackingCode, status]\n        ShP --> Shipment\n    end\n\n    Sales_Context -- \"Translates via ACL\" --> Shipping_Context\n\n    style Sales_Context fill:#e1f5fe,stroke:#01579b\n    style Shipping_Context fill:#fff3e0,stroke:#e65100",
+    "kind": "code"
+  },
+  {
+    "id": "chp_05-code-35",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "ID မရှိဘဲ တန်ဖိုး (Value) ပေါ်မှာသာ မူတည်တဲ့ Object တွေဖြစ်ပါတယ်။ ဖန်တီးပြီးရင် ပြင်လို့ မရပါဘူး (Immutable)။ (ဥပမာ - Money, Address, Color)။",
+      "၃။ Aggregate & Aggregate Root",
+      "ဆက်စပ်နေတဲ့ Entity နဲ့ Value Object တွေကို စုစည်းထားတဲ့ Cluster (အစုအဖွဲ့) ဖြစ်ပါတယ်။ ဒါက Data Consistency အတွက် အရေးကြီးပါတယ်။",
+      "အောက်ပါ Diagram မှာ Aggregate Boundary ကို ရှင်းပြထားပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph Aggregate_Boundary [Order Aggregate]\n        Order[Order Root<br/>addLineItem<br/>removeLineItem]\n        Item1[OrderItem 1]\n        Item2[OrderItem 2]\n\n        Order --> Item1\n        Order --> Item2\n    end\n\n    Client[Client / External Object]\n\n    Client -->|Allowed: Calls Root| Order\n    Client -.->|Forbidden: Direct Access| Item1\n\n    style Aggregate_Boundary fill:#f9fbe7,stroke:#827717,stroke-dasharray: 5 5\n    style Order fill:#c5e1a5,stroke:#33691e,stroke-width:2px",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-36",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "ဆက်စပ်နေတဲ့ Entity နဲ့ Value Object တွေကို စုစည်းထားတဲ့ Cluster (အစုအဖွဲ့) ဖြစ်ပါတယ်။ ဒါက Data Consistency အတွက် အရေးကြီးပါတယ်။",
+      "အောက်ပါ Diagram မှာ Aggregate Boundary ကို ရှင်းပြထားပါတယ်။",
+      "၄။ Domain Service",
+      "Entity သို့မဟုတ် Value Object တစ်ခုတည်းနဲ့ မဆိုင်တဲ့ Business Logic တွေကို ရေးသားဖို့ နေရာဖြစ်ပါတယ်။ (ဥပမာ - ငွေလွှဲခြင်း Logic)။ Account တစ်ခုချင်းစီက \"ငွေလွှဲတယ်\" ဆိုတာကို မသိသင့်ပါဘူး။ သူတို့က \"ငွေသွင်း/ငွေထုတ်\" (Debit/Credit) ကိုပဲ သိသင့်ပါတယ်။ TransferService က ဒါကို စီမံပေးပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n    participant Client\n    participant Service as TransferDomainService\n    participant AccA as Account A\n    participant AccB as Account B\n\n    Client->>Service: transfer(from: A, to: B, amount: 100)\n\n    Note over Service: 1. Check if A has balance\n    Service->>AccA: withdraw(100)\n\n    alt Withdraw Success\n        Note over Service: 2. Deposit to B\n        Service->>AccB: deposit(100)\n        Service-->>Client: Transfer Successful\n    else Insufficient Funds\n        Service-->>Client: Transfer Failed\n    end",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-37",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၈.၃ Anemic vs. Rich Domain Model",
+    "context": [
+      "၅.၈.၃ Anemic vs. Rich Domain Model",
+      "Developer တော်တော်များများ မှားလေ့ရှိတဲ့ အချက်က Class တွေဆောက်ပြီးရင် Data (Getter/Setter) ပဲ ထည့်ပြီး၊ Logic တွေကို Service Layer မှာ သွားရေးတတ်တာပါ။ ဒါကို Anemic Domain Model (သွေးအားနည်းသော မော်ဒယ်) လို့ခေါ်ပြီး DDD မှာ ရှောင်ကြဉ်သင့်ပါတယ်။",
+      "DDD က အားပေးတာက Rich Domain Model ပါ။ Data ရှိတဲ့နေရာမှာ Logic ပါ ရှိရပါမယ်။",
+      "Anemic Model (Bad Example):"
+    ],
+    "language": "java",
+    "code": "// Class ထဲမှာ Data ပဲ ရှိတယ်\nclass Order {\n    public List<OrderItem> items;\n    public double totalAmount;\n    // Getters and Setters...\n}\n\n// Logic က Service ထဲ ရောက်နေတယ် (Procedural Code)\nclass OrderService {\n    public void addItem(Order order, Item item) {\n        order.getItems().add(item);\n        order.setTotalAmount(order.getTotalAmount() + item.getPrice()); // Logic is here!\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-38",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "Code example",
+    "context": [
+      "Developer တော်တော်များများ မှားလေ့ရှိတဲ့ အချက်က Class တွေဆောက်ပြီးရင် Data (Getter/Setter) ပဲ ထည့်ပြီး၊ Logic တွေကို Service Layer မှာ သွားရေးတတ်တာပါ။ ဒါကို Anemic Domain Model (သွေးအားနည်းသော မော်ဒယ်) လို့ခေါ်ပြီး DDD မှာ ရှောင်ကြဉ်သင့်ပါတယ်။",
+      "DDD က အားပေးတာက Rich Domain Model ပါ။ Data ရှိတဲ့နေရာမှာ Logic ပါ ရှိရပါမယ်။",
+      "Anemic Model (Bad Example):",
+      "Rich Domain Model (DDD Way):"
+    ],
+    "language": "java",
+    "code": "// Data ရော Logic ရော တစ်နေရာတည်းမှာ ရှိတယ် (OOP)\nclass Order {\n    private List<OrderItem> items;\n    private double totalAmount;\n\n    public void addItem(Item item) {\n        // Validation Logic\n        if (item == null) throw new Error(\"Item cannot be null\");\n\n        // State Change Logic\n        this.items.add(item);\n        recalculateTotal();\n    }\n\n    private void recalculateTotal() {\n        this.totalAmount = items.stream().mapToDouble(i -> i.getPrice()).sum();\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_05-code-39",
+    "chapter": "အခန်း ၅ :: Software Design and Architecture",
+    "chapterFile": "chp_05.html",
+    "heading": "၅.၈.၄ The Big Picture: DDD Layered Architecture",
+    "context": [
+      "Anemic Model (Bad Example):",
+      "Rich Domain Model (DDD Way):",
+      "၅.၈.၄ The Big Picture: DDD Layered Architecture",
+      "DDD ကို လက်တွေ့ အကောင်အထည်ဖော်တဲ့အခါ Layer ၄ ခု ခွဲပြီး တည်ဆောက်လေ့ရှိပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph Interface_Layer [Interface Layer - Web/API]\n        Controller[OrderController]\n    end\n    subgraph Application_Layer [Application Layer - Use Cases]\n        AppService[OrderApplicationService]\n    end\n    subgraph Domain_Layer [Domain Layer - Business Logic]\n        direction TB\n        DomainService[PricingService]\n\n        subgraph Aggregate [Order Aggregate]\n            Root[Order Root]\n            Child[OrderItem]\n            Root --> Child\n        end\n\n        IRepo[[OrderRepository Interface]]\n\n        AppService --> DomainService\n        AppService --> Root\n        DomainService --> Root\n        Root --> IRepo\n    end\n    subgraph Infrastructure_Layer [Infrastructure Layer - Technical]\n        RepoImpl[OrderRepository Implementation]\n        DB[(Database)]\n\n        RepoImpl -.->|Implements| IRepo\n        RepoImpl --> DB\n    end\n    Controller --> AppService\n\n    style Domain_Layer fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px\n    style Aggregate fill:#ffffff,stroke:#2e7d32,stroke-dasharray: 5 5",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-1",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "၆.၂.၁ Feature Branch Workflow",
+    "context": [
+      "Git ကတော့ ဒီနေ့ခေတ်မှာ Industry Standard ဖြစ်နေတဲ့ Distributed Version Control System တစ်ခုပါ။ Git က Developer တွေကို ဘာတွေ ကူညီပေးနိုင်လဲဆိုတော့ -",
+      "၆.၂.၁ Feature Branch Workflow",
+      "Team နဲ့ အလုပ်လုပ်တဲ့အခါ အသုံးအများဆုံး Workflow ကတော့ Feature Branch Workflow ဖြစ်ပါတယ်။",
+      "ဒီနည်းလမ်းက Code Quality ကို ထိန်းသိမ်းပေးသလို၊ Main Branch ကိုလည်း အမြဲတမ်း Stable ဖြစ်နေစေပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "gitGraph\n    commit id: \"Initial Commit\"\n    branch feature-login\n    commit id: \"feat: Add login form\" type: HIGHLIGHT\n    commit id: \"feat: Add password validation\" type: HIGHLIGHT\n    checkout main\n    commit id: \"fix: Hotfix on main\" type: REVERSE\n    branch feature-register\n    commit id: \"feat: Add register page\" type: HIGHLIGHT\n    checkout main\n    merge feature-login\n    checkout feature-register\n    commit id: \"feat: Add email service\" type: HIGHLIGHT\n    checkout main\n    merge feature-register",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-2",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Merge vs. Rebase",
+    "context": [
+      "Merge vs. Rebase",
+      "Git မှာ Branch တွေကို ပြန်ပေါင်းတဲ့အခါ Merge နဲ့ Rebase ဆိုပြီး နည်းလမ်း (၂) မျိုး ရှိပါတယ်။ Developer တော်တော်များများ ဒီနှစ်ခုကို ရောထွေးတတ်ကြပါတယ်။",
+      "Before Merge and Rebase",
+      "မူလအခြေအနေမှာ main branch နဲ့ feature branch ဘယ်လိုကွဲထွက်နေလဲ ဆိုတာ ကြည့်ကြည့်ရအောင်။"
+    ],
+    "language": "mermaid",
+    "code": "gitGraph\n   commit id: \"A\"\n   commit id: \"B\"\n   branch feature\n   commit id: \"C\"\n   commit id: \"D\"\n   checkout main\n   commit id: \"E\"\n   commit id: \"F\"",
+    "kind": "code"
+  },
+  {
+    "id": "chp_06-code-3",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Before Merge and Rebase",
+      "မူလအခြေအနေမှာ main branch နဲ့ feature branch ဘယ်လိုကွဲထွက်နေလဲ ဆိုတာ ကြည့်ကြည့်ရအောင်။",
+      "Merge",
+      "ဒါကတော့ သမိုင်းကြောင်း (History) ကို အရှိအတိုင်း သိမ်းထားတာပါ။ Branch နှစ်ခု ပေါင်းသွားတဲ့ နေရာမှာ \"Merge Commit\" (G) တစ်ခု ပေါ်လာပါမယ်။ History လမ်းကြောင်းတွေ ခွဲထွက်သွားတာ၊ ပြန်ပေါင်းတာတွေ ရှုပ်ထွေးနိုင်ပေမယ့်၊ ဘာဖြစ်ခဲ့လဲဆိုတာကို အမှန်အတိုင်း (Non-destructive) မြင်ရပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "gitGraph\n   commit id: \"A\"\n   commit id: \"B\"\n   branch feature\n   commit id: \"C\"\n   commit id: \"D\"\n   checkout main\n   commit id: \"E\"\n   commit id: \"F\"\n   merge feature id: \"G\"",
+    "kind": "code"
+  },
+  {
+    "id": "chp_06-code-4",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "မူလအခြေအနေမှာ main branch နဲ့ feature branch ဘယ်လိုကွဲထွက်နေလဲ ဆိုတာ ကြည့်ကြည့်ရအောင်။",
+      "Merge",
+      "ဒါကတော့ သမိုင်းကြောင်း (History) ကို အရှိအတိုင်း သိမ်းထားတာပါ။ Branch နှစ်ခု ပေါင်းသွားတဲ့ နေရာမှာ \"Merge Commit\" (G) တစ်ခု ပေါ်လာပါမယ်။ History လမ်းကြောင်းတွေ ခွဲထွက်သွားတာ၊ ပြန်ပေါင်းတာတွေ ရှုပ်ထွေးနိုင်ပေမယ့်၊ ဘာဖြစ်ခဲ့လဲဆိုတာကို အမှန်အတိုင်း (Non-destructive) မြင်ရပါတယ်။",
+      "Example"
+    ],
+    "language": "bash",
+    "code": "$ (main)    : git checkout main\n$ (main)    : git merge feature",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-5",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "ဒါကတော့ သမိုင်းကြောင်း (History) ကို အရှိအတိုင်း သိမ်းထားတာပါ။ Branch နှစ်ခု ပေါင်းသွားတဲ့ နေရာမှာ \"Merge Commit\" (G) တစ်ခု ပေါ်လာပါမယ်။ History လမ်းကြောင်းတွေ ခွဲထွက်သွားတာ၊ ပြန်ပေါင်းတာတွေ ရှုပ်ထွေးနိုင်ပေမယ့်၊ ဘာဖြစ်ခဲ့လဲဆိုတာကို အမှန်အတိုင်း (Non-destructive) မြင်ရပါတယ်။",
+      "Example",
+      "Rebase",
+      "ဒါကတော့ History ကို ပြန်ပြင်ရေးလိုက်တာပါ။ ကိုယ့် Feature Branch ရဲ့ အစ (Base) ကို Main Branch ရဲ့ နောက်ဆုံးအခြေအနေ (Latest Commit) ဆီ ရွှေ့လိုက်တာပါ။ ရလဒ်ကတော့ မျဉ်းဖြောင့်အတိုင်း (Linear History) ဖြစ်သွားပြီး ကြည့်ရ ရှင်းလင်းပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "gitGraph\n   commit id: \"A\"\n   commit id: \"B\"\n   commit id: \"E\"\n   commit id: \"F\"\n   branch feature\n   commit id: \"C'\"\n   commit id: \"D'\"\n   checkout main\n   merge feature",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-6",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "ဒါကတော့ History ကို ပြန်ပြင်ရေးလိုက်တာပါ။ ကိုယ့် Feature Branch ရဲ့ အစ (Base) ကို Main Branch ရဲ့ နောက်ဆုံးအခြေအနေ (Latest Commit) ဆီ ရွှေ့လိုက်တာပါ။ ရလဒ်ကတော့ မျဉ်းဖြောင့်အတိုင်း (Linear History) ဖြစ်သွားပြီး ကြည့်ရ ရှင်းလင်းပါတယ်။",
+      "Rebase လုပ်တယ်ဆိုတာ Feature branch က commit တစ်ခုချင်းစီကို Main branch ရဲ့ ထိပ်ဆုံးမှာ ပြန်စီ (Re-apply) လိုက်တာပါ။ ဒါကြောင့် Conflict ဖြစ်နိုင်ခြေလည်း ရှိပါတယ်။ Rebase က ကိုယ့်ရဲ့ Branch history ကို ရှင်းလင်းစေပါတယ်။",
+      "ဒီဥပမာမှာ ဆိုရင် မူလက A, B ကနေ C, D ခွဲထွက်သွားတာပါ။ Rebase လုပ်လိုက်တဲ့အခါ Main branch မှာရှိတဲ့ A, B, E, F ပြီးမှ Feature branch က commit တွေကို လာဆက်တာဖြစ်သွားပါမယ်။ အစီအစဉ်က A -> B -> E -> F -> C' -> D' ဖြစ်သွားပါမယ်။",
+      "Example"
+    ],
+    "language": "bash",
+    "code": "$ (main)    : git checkout feature\n$ (feature) : git rebase main\n$ (feature) : git checkout main\n$ (main)    : git merge feature",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-7",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Example",
+      "ဘယ်ဟာကို သုံးမလဲ?",
+      "Public Branch (e.g., main ) ပေါ်မှာ ဘယ်တော့မှ Rebase မလုပ်ပါနဲ့။ History တွေ ပြောင်းလဲသွားပြီး အခြား Developer တွေရဲ့ Code တွေနဲ့ ရှုပ်ထွေးကုန်နိုင်လို့ပါ။",
+      "မလုပ်ရ"
+    ],
+    "language": "text",
+    "code": "$ (main) : git rebase feature",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-8",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Public Branch (e.g., main ) ပေါ်မှာ ဘယ်တော့မှ Rebase မလုပ်ပါနဲ့။ History တွေ ပြောင်းလဲသွားပြီး အခြား Developer တွေရဲ့ Code တွေနဲ့ ရှုပ်ထွေးကုန်နိုင်လို့ပါ။",
+      "မလုပ်ရ",
+      "ကိုယ့် Private Feature Branch မှာတော့ Main နဲ့ ပြန်မပေါင်းခင် Rebase လုပ်တာ ကောင်းပါတယ်။ History ရှင်းလင်းပြီး ဖတ်ရလွယ်ကူစေပါတယ်။",
+      "လုပ်လို့ရသည်"
+    ],
+    "language": "text",
+    "code": "$ (feature) : git rebase main",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-9",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "၆.၂.၂ Commit Message Standards (Conventional Commits)",
+    "context": [
+      "လုပ်လို့ရသည်",
+      "၆.၂.၂ Commit Message Standards (Conventional Commits)",
+      "Git သုံးတဲ့အခါ Developer အများစု လုပ်လေ့ရှိတဲ့ အမှားကတော့ Commit Message ကို ပေါ့ပေါ့ဆဆ ရေးတာပါပဲ။ fixed bug , wip , update ဆိုတဲ့ Message တွေက ပြန်ဖတ်တဲ့အခါ ဘာမှ အဓိပ္ပာယ် မရှိပါဘူး။ Project ကြီးလာတာနဲ့အမျှ History ကို ပြန်ကြည့်ပြီး ပြဿနာရှာတဲ့အခါ Commit Message ကောင်းကောင်း ရေးထားခြင်းက အသက်ပါပဲ။",
+      "ဒီအတွက် Conventional Commits ဆိုတဲ့ Standard ကို လိုက်နာသင့်ပါတယ်။ ပုံစံကတော့ -"
+    ],
+    "language": "text",
+    "code": "<type>(<scope>): <subject>",
+    "kind": "code"
+  },
+  {
+    "id": "chp_06-code-10",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Example: Inconsistent vs. Standardized (TypeScript)",
+    "context": [
+      "Software Engineering မှာ နာမည်ကြီးတဲ့ ဆိုရိုးစကား တစ်ခုရှိပါတယ်။ \"Code is read much more often than it is written.\" (Code ကို ရေးရတာထက် ပြန်ဖတ်ရတဲ့ အကြိမ်ရေက ပိုများတယ်)။ ဒါကြောင့် Coding Standard တစ်ခုကို လိုက်နာခြင်းအားဖြင့် -",
+      "ဘာတွေကို သတ်မှတ်လေ့ရှိလဲ?",
+      "Example: Inconsistent vs. Standardized (TypeScript)",
+      "Without Standard (ဖတ်ရခက်၊ Type Safety မရှိ)"
+    ],
+    "language": "ts",
+    "code": "// Naming မမှန်၊ 'any' type သုံးထား၊ Indentation မညီ\nfunction c(x: any,y: any){\nvar d=x+y; return d;\n    }",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-11",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Example: Inconsistent vs. Standardized (TypeScript)",
+    "context": [
+      "ဘာတွေကို သတ်မှတ်လေ့ရှိလဲ?",
+      "Example: Inconsistent vs. Standardized (TypeScript)",
+      "Without Standard (ဖတ်ရခက်၊ Type Safety မရှိ)",
+      "With Standard (ရှင်းလင်း၊ Type Safe ဖြစ်)"
+    ],
+    "language": "ts",
+    "code": "// Descriptive Naming၊ Explicit Types၊ Consistent Spacing\nfunction calculateTotal(price: number, tax: number): number {\n  const total = price + tax;\n  return total;\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-12",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Example: Extract Class Refactoring (TypeScript)",
+    "context": [
+      "Example: Extract Class Refactoring (TypeScript)",
+      "လက်တွေ့ ဥပမာ တစ်ခု ကြည့်ကြပါစို့။ Person Class တစ်ခုထဲတွင် လူနာမည်ရော၊ နေရပ်လိပ်စာ (Address) အချက်အလက်များပါ ရောပြွမ်းနေသည် ဆိုပါစို့။ ၎င်းသည် Single Responsibility Principle (SRP) ကို ချိုးဖောက်နေပါသည်။",
+      "Before Refactoring (Code Smell: Divergent Change)",
+      "ဒီမှာ Person Class က တာဝန် နှစ်ခု ယူထားပါတယ်။ လူ့အကြောင်းလည်း သိရတယ်၊ လိပ်စာ Format တွေကိုလည်း သိနေရတယ်။"
+    ],
+    "language": "ts",
+    "code": "class Person {\n  constructor(\n    public name: string,\n    public street: string,\n    public city: string,\n    public zipCode: string\n  ) {}\n\n  // လိပ်စာနဲ့ ပတ်သက်တဲ့ Logic တွေက Person ထဲမှာ ရောနေတယ်\n  getAddressLabel(): string {\n    return `${this.street}, ${this.city} - ${this.zipCode}`;\n  }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-13",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Before Refactoring (Code Smell: Divergent Change)",
+      "ဒီမှာ Person Class က တာဝန် နှစ်ခု ယူထားပါတယ်။ လူ့အကြောင်းလည်း သိရတယ်၊ လိပ်စာ Format တွေကိုလည်း သိနေရတယ်။",
+      "After Refactoring (Solution: Extract Class)",
+      "Address နဲ့ သက်ဆိုင်တဲ့ Logic တွေကို သီးသန့် Class ခွဲထုတ်လိုက်ပါတယ်။"
+    ],
+    "language": "ts",
+    "code": "// 1. Address ကို သီးသန့် Class ခွဲထုတ်လိုက်တယ်\nclass Address {\n  constructor(\n    public street: string,\n    public city: string,\n    public zipCode: string\n  ) {}\n\n  // Address နဲ့ ဆိုင်တဲ့ Logic က ဒီမှာပဲ ရှိတော့တယ်\n  toLabel(): string {\n    return `${this.street}, ${this.city} - ${this.zipCode}`;\n  }\n}\n\n// 2. Person က Address ကို ယူသုံးရုံပဲ (Compositon)\nclass Person {\n  private address: Address;\n\n  constructor(name: string, address: Address) {\n    this.name = name;\n    this.address = address;\n  }\n\n  public name: string;\n\n  getProfile(): string {\n    // Person က Address ရဲ့ အသေးစိတ်ကို သိစရာ မလိုတော့ဘူး\n    return `${this.name} lives at ${this.address.toLabel()}`;\n  }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-14",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "ဒီမှာ Person Class က တာဝန် နှစ်ခု ယူထားပါတယ်။ လူ့အကြောင်းလည်း သိရတယ်၊ လိပ်စာ Format တွေကိုလည်း သိနေရတယ်။",
+      "After Refactoring (Solution: Extract Class)",
+      "Address နဲ့ သက်ဆိုင်တဲ့ Logic တွေကို သီးသန့် Class ခွဲထုတ်လိုက်ပါတယ်။",
+      "Result Diagram"
+    ],
+    "language": "mermaid",
+    "code": "classDiagram\n    direction TB\n\n    note \"Before Refactoring: Monolithic Class\"\n    class Person_Old {\n        +String name\n        +String street\n        +String city\n        +String zipCode\n        +getAddressLabel()\n    }\n\n    note \"After Refactoring: Extract Class\"\n    class Person_New {\n        +String name\n        -Address address\n        +getProfile()\n    }\n\n    class Address {\n        +String street\n        +String city\n        +String zipCode\n        +toLabel()\n    }\n\n    Person_New *-- Address : Composition",
+    "kind": "code"
+  },
+  {
+    "id": "chp_06-code-15",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Function တစ်ခုအတွင်းတွင် ရှိနိုင်သော Logic လမ်းကြောင်း (Independent Paths) အရေအတွက်ကို တိုင်းတာခြင်း ဖြစ်ပါသည်။ if , else , for , while , switch case ကဲ့သို့သော Control Flow Statement များလေလေ Complexity မြင့်လေလေ ဖြစ်ပါသည်။",
+      "Complexity မြင့်မားသော Function သည် နားလည်ရ ခက်ခဲသလို၊ လမ်းကြောင်း အစုံအလင်ကို စမ်းသပ်ရန် Unit Test ရေးသားရာတွင်လည်း အလွန် ခက်ခဲစေပါသည်။",
+      "Visualizing Complexity",
+      "အောက်ပါ Diagram တွင် Decision Point များစွာ ပါဝင်နေသဖြင့် လမ်းကြောင်းများ ရှုပ်ထွေးနေသည်ကို တွေ့မြင်နိုင်ပါသည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    Start(Start) --> CheckA{Condition A?}\n    CheckA -->|True| DoX[Do Action X]\n    CheckA -->|False| CheckB{Condition B?}\n    CheckB -->|True| DoY[Do Action Y]\n    CheckB -->|False| DoZ[Do Action Z]\n    DoX --> LoopCheck{Loop?}\n    DoY --> LoopCheck\n    DoZ --> End(End)\n    LoopCheck -->|True| LoopAction[Loop Action]\n    LoopAction --> LoopCheck\n    LoopCheck -->|False| End",
+    "kind": "code"
+  },
+  {
+    "id": "chp_06-code-16",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "အိမ်ထဲကို လူစိမ်း မဝင်ခင် တံခါးဝက စစ်သလိုပါပဲ။ Function တစ်ခုထဲကို Data ဝင်လာပြီ ဆိုတာနဲ့ ချက်ချင်း စစ်ဆေးပါ။ Null ဖြစ်နေလား၊ Format မှားနေလား၊ Negative Number တွေ ပါနေလား စစ်ပါ။ အတွင်းပိုင်း Logic ရောက်မှ စစ်တာ နောက်ကျလွန်းနေပါပြီ။",
+      "2. Guard Clauses (Early Return)",
+      "Nested if-else တွေ အများကြီး သုံးမယ့်အစား၊ အခြေအနေ မမှန်တာနဲ့ Function ကနေ ချက်ချင်း ထွက် (Return) ခိုင်းပါ။ ဒါက Code ကို ဖတ်ရလွယ်ကူစေပါတယ်။",
+      "Bad (Deep Nesting)"
+    ],
+    "language": "ts",
+    "code": "function processPayment(user) {\n  if (user != null) {\n    if (user.hasBalance) {\n      if (user.isActive) {\n        // Process Payment logic here...\n      }\n    }\n  }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-17",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "2. Guard Clauses (Early Return)",
+      "Nested if-else တွေ အများကြီး သုံးမယ့်အစား၊ အခြေအနေ မမှန်တာနဲ့ Function ကနေ ချက်ချင်း ထွက် (Return) ခိုင်းပါ။ ဒါက Code ကို ဖတ်ရလွယ်ကူစေပါတယ်။",
+      "Bad (Deep Nesting)",
+      "Good (Guard Clauses)"
+    ],
+    "language": "ts",
+    "code": "function processPayment(user) {\n  if (user == null) return;\n  if (!user.hasBalance) return;\n  if (!user.isActive) return;\n\n  // Process Payment (Logic က ရှင်းသွားပြီ)\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-18",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Documentation ရေးရန် အချိန်မပေးနိုင်ပါက၊ အကောင်းဆုံး နည်းလမ်းမှာ Self-Documenting Code ရေးခြင်း ဖြစ်သည်။ Comment များကို ဖတ်စရာ မလိုဘဲ၊ Code ကို ဝတ္ထုတစ်ပုဒ် ဖတ်သကဲ့သို့ ဖတ်လိုက်သည်နှင့် နားလည်နေရပါမည်။",
+      "Key Principles:",
+      "Example (TypeScript):",
+      "Bad Code (Cryptic & Magic Numbers)"
+    ],
+    "language": "ts",
+    "code": "// ဘာလုပ်မှန်း မသိရ၊ 86400 က ဘာလဲ မသိရ၊ Type က any ဖြစ်နေသည်\nfunction c(d: any): number {\n  return d * 86400;\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-19",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Key Principles:",
+      "Example (TypeScript):",
+      "Bad Code (Cryptic & Magic Numbers)",
+      "Good Code (Self-Documenting)"
+    ],
+    "language": "ts",
+    "code": "const SECONDS_IN_DAY = 86400;\n\nfunction convertDaysToSeconds(days: number): number {\n  return days * SECONDS_IN_DAY;\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-20",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "Comment ရေးခြင်းသည် အနုပညာ တစ်ခုပါ။ အများကြီး ရေးတိုင်း မကောင်းပါ။ မှားယွင်းနေသော Comment (Outdated Comment) သည် Comment မရှိတာထက် ပိုဆိုးပါသည်။",
+      "Rule of Thumb",
+      "Code က \"What\" (ဘာလုပ်နေလဲ) ကို ပြောပြနေပြီးသား ဖြစ်သည့်အတွက်၊ Comment တွင် \"Why\" (ဘာကြောင့် ဒီလို ဆုံးဖြတ်လိုက်ရတာလဲ) ဆိုတာကိုပဲ ရေးပါ။",
+      "Example (TypeScript):"
+    ],
+    "language": "ts",
+    "code": "// Bad Comment (Redundant)\n// i ကို 1 တိုးသည်\ni++;\n\n// Bad Comment (Explaining Syntax)\n// Loop through the list backward\nfor (let i = items.length - 1; i >= 0; i--) { ... }\n\n// Good Comment (Explaining Business Logic / Why)\n// We iterate backward because removing items from the array while iterating forward\n// would shift indices and cause a bug in item processing.\nfor (let i = items.length - 1; i >= 0; i--) { ... }",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-21",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "ယနေ့ခေတ်တွင် Documentation ရေးရာ၌ AI Tools (ChatGPT, Copilot, GitHub Copilot) များသည် အလွန် အစွမ်းထက်သော လက်ထောက်များ ဖြစ်လာပါသည်။ Developer များ ပျင်းရိသည့် အလုပ်ကို AI က ကူညီပေးနိုင်ပါသည်။",
+      "AI ကို ဘာတွေ ခိုင်းလို့ရလဲ:",
+      "Example of AI Generated Documentation:",
+      "Developer ရေးထားသည့် Code"
+    ],
+    "language": "ts",
+    "code": "function calculateDiscount(price: number, type: 'vip' | 'regular'): number {\n    return type === 'vip' ? price * 0.8 : price * 0.95;\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_06-code-22",
+    "chapter": "အခန်း ၆ :: Design to Reliable Code",
+    "chapterFile": "chp_06.html",
+    "heading": "Code example",
+    "context": [
+      "AI ကို ဘာတွေ ခိုင်းလို့ရလဲ:",
+      "Example of AI Generated Documentation:",
+      "Developer ရေးထားသည့် Code",
+      "AI က ဖြည့်စွက်ပေးသော Documentation:"
+    ],
+    "language": "ts",
+    "code": "/**\n * Calculates the final price after applying a discount based on user type.\n * @param price - The original price of the item.\n * @param type - The classification of the customer ('vip' gets 20%, 'regular' gets 5%).\n * @returns The final price after discount.\n */\nfunction calculateDiscount(price: number, type: 'vip' | 'regular'): number {\n    return type === 'vip' ? price * 0.8 : price * 0.95;\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_07-code-1",
+    "chapter": "အခန်း ၇ :: Software Verification and Validation (V&V)",
+    "chapterFile": "chp_07.html",
+    "heading": "Code example",
+    "context": [
+      "Verification နဲ့ Validation အကြောင်းပြောရရင် Project Management မှာ မပါမဖြစ် ဥပမာ တစ်ခု ဖြစ်သည့် ဒန်း ဥပမာ ကို ပြောပြချင်ပါတယ်။",
+      "Verification အဆင့် အရ သစ်ပင်မှာ ကြိုးနဲ့ ချီ ထားရမယ်။ သစ်သားပါ ပါရမယ်။ Secure ဖြစ်ရမယ်။ ခိုင်ခံရမယ်။ ဒီ အချက်တွေ အကုန် ကိုက်ညီပါတယ်။",
+      "Validation မှာတော့ User လိုချင်တာနဲ့ ကိုက်ညီမှု မရှိသည့် အတွက် Validation မ အောင်မြင်ပါဘူး။",
+      "နောက်ထပ် ဥပမာ တစ်ခု အနေနဲ့ ရှမ်းခေါက်ဆွဲ ဆိုင်တစ်ဆိုင် ဖွင့်တယ်လို့ သဘောထားကြည့်ရအောင်ဗျာ။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n    subgraph Verification\n        direction TB\n        V_Q[\"<b>Are we building the product RIGHT?</b>Specification နဲ့ ကိုက်ညီရဲ့လား?\"]\n        V_Check[\"Process: Reviews, Inspections, Static Analysis\"]\n    end\n    subgraph Validation\n        direction TB\n        Val_Q[\"<b>Are we building the RIGHT product?</b>User လိုချင်တာ ဟုတ်ရဲ့လား?\"]\n        Val_Check[\"Process: UAT, User Feedback, Beta Testing\"]\n    end",
+    "kind": "example"
+  },
+  {
+    "id": "chp_07-code-2",
+    "chapter": "အခန်း ၇ :: Software Verification and Validation (V&V)",
+    "chapterFile": "chp_07.html",
+    "heading": "၇.၃ Testing Strategies နှင့် The Testing Pyramid",
+    "context": [
+      "ဒါကြောင့် Modern IDE (VS Code) တွေမှာ အနီရောင် မျဉ်းတား လိုင်းတား ပြနေတာတွေဟာ တကယ်တော့ Static Testing လုပ်နေတာပဲ ဖြစ်ပါသည်။",
+      "၇.၃ Testing Strategies နှင့် The Testing Pyramid",
+      "Code ကို Run ပြီး စစ်ဆေးတော့မည် ဆိုလျှင် ဘယ်လို စစ်မလဲ။ Strategy ဘယ်လို ထားမလဲ။ အသုံးအများဆုံး Model ကတော့ Mike Cohn's Testing Pyramid ဖြစ်ပါသည်။",
+      "Pyramid ပုံစံ ခိုင်းနှိုင်းထားခြင်းမှာ အောက်ခြေ (Unit Test) ကို အများဆုံး တည်ဆောက်ရမည် ဖြစ်ပြီး၊ ထိပ်ဆုံး (E2E Test) ကို အနည်းဆုံး ထားရမည် ဟု ဆိုလိုခြင်း ဖြစ်သည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph \"The Testing Pyramid\"\n        direction TB\n        A[\"<b>UI / End-to-End Tests (10%)</b><br/><i>Slow, expensive, brittle</i>\"] --> B[\"<b>Integration Tests (20%)</b><br/><i>Test component connections</i>\"]\n        B --> C[\"<b>Unit Tests (70%)</b><br/><i>Fast, cheap, should be majority</i>\"]\n    end\n    style A fill:#ffcccc,stroke:#333\n    style B fill:#ffffcc,stroke:#333\n    style C fill:#ccffcc,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_07-code-3",
+    "chapter": "အခန်း ၇ :: Software Verification and Validation (V&V)",
+    "chapterFile": "chp_07.html",
+    "heading": "1. Unit Testing (အောက်ခြေဖောင်ဒေးရှင်း)",
+    "context": [
+      "1. Unit Testing (အောက်ခြေဖောင်ဒေးရှင်း)",
+      "Unit Test ဆိုသည်မှာ Code ၏ အသေးဆုံး အစိတ်အပိုင်း (Function တစ်ခု၊ Class တစ်ခု) ကို သီးခြားခွဲထုတ်ပြီး စစ်ဆေးခြင်း ဖြစ်သည်။",
+      "Example (TypeScript & Jest):",
+      "စျေးဝယ်လှည်း (Cart) ထဲက ပစ္စည်းတန်ဖိုး စုစုပေါင်း တွက်တဲ့ Function ကို စစ်ကြည့်ရအောင်။"
+    ],
+    "language": "ts",
+    "code": "// src/cart.ts\nexport function calculateTotal(items: { price: number; qty: number }[]): number {\n  return items.reduce((total, item) => total + item.price * item.qty, 0);\n}\n\n// tests/cart.test.ts\nimport { calculateTotal } from '../src/cart';\n\ndescribe('Cart Calculator', () => {\n  it('should calculate total price correctly', () => {\n    const items = [\n      { price: 100, qty: 2 }, // 200\n      { price: 50, qty: 1 }   // 50\n    ];\n\n    expect(calculateTotal(items)).toBe(250);\n  });\n\n  it('should return 0 for empty cart', () => {\n    expect(calculateTotal([])).toBe(0);\n  });\n});",
+    "kind": "example"
+  },
+  {
+    "id": "chp_08-code-1",
+    "chapter": "အခန်း ၈ :: Fundamental Principles of Software Engineering",
+    "chapterFile": "chp_08.html",
+    "heading": "Code example",
+    "context": [
+      "Software System တစ်ခုကို တည်ဆောက်ရာတွင် အရေးကြီးဆုံး အချက်မှာ \"ရောထွေးမနေစေခြင်း\" ဖြစ်သည်။ Separation of Concerns ဆိုသည်မှာ ပရိုဂရမ်တစ်ခုကို တာဝန်မတူညီသော အစိတ်အပိုင်း (Concern) များအဖြစ် သီးခြားစီ ခွဲထုတ်ခြင်း ဖြစ်သည်။",
+      "ဥပမာအားဖြင့် စားသောက်ဆိုင် တစ်ဆိုင်တွင် စားဖိုမှူး (ချက်ပြုတ်ရေး)၊ စားပွဲထိုး (ဧည့်ခံရေး) နှင့် ငွေကိုင် (ငွေစာရင်း) ဟူ၍ တာဝန်ခွဲခြားထားသကဲ့သို့ ဖြစ်သည်။ စားဖိုမှူးက ငွေထွက်ရှင်းနေလျှင် ထိုဆိုင် ရှုပ်ထွေးသွားပါလိမ့်မည်။",
+      "Software တွင်လည်း ထိုနည်းတူစွာ -",
+      "ဟူ၍ ခွဲခြားထားသင့်သည်။ ဤအချက်သည် အခန်း ၅ မှာ ဖော်ပြထားသည့် Layered Architecture နှင့် MVC Pattern တို့၏ အဓိက သဘောတရား ဖြစ်သည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph \"Without SoC (Spaghetti Code)\"\n        A[\"<b>Monolithic / God Component</b>UI ရော၊ တွက်ချက်တာရော၊Database ခေါ်တာရောတစ်နေရာတည်း ရောရေးထားခြင်း\"]\n    end\n\n    subgraph \"With SoC (Clean Architecture)\"\n        B[UI ComponentView] --> C[Business Logic ComponentService]\n        C --> D[Data Access ComponentRepository]\n    end\n\n    style A fill:#ffcccc,stroke:#333\n    style B fill:#ccffcc,stroke:#333\n    style C fill:#ccffcc,stroke:#333\n    style D fill:#ccffcc,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_08-code-2",
+    "chapter": "အခန်း ၈ :: Fundamental Principles of Software Engineering",
+    "chapterFile": "chp_08.html",
+    "heading": "Encapsulation (အလုံပိတ်ခြင်း)",
+    "context": [
+      "Module တစ်ခုရဲ့ \"အတွင်းပိုင်း ဘယ်လို အလုပ်လုပ်လဲ\" (How) ဆိုတာကို အခြား Module တွေက မသိအောင် ဖုံးကွယ်ထားခြင်း ဖြစ်ပါတယ်။ အပြင်က လူက \"ဘာလုပ်ပေးနိုင်လဲ\" (What) ဆိုတာပဲ သိရပါမယ်။",
+      "ကားမောင်းခြင်း ဥပမာ: ကားမောင်းသူ (User) တစ်ယောက်အနေနဲ့ စတီယာရင်၊ လီဗာ၊ ဘရိတ် (Interface) ကိုပဲ သိဖို့ လိုပါတယ်။ အင်ဂျင်ထဲမှာ ဆီဘယ်လို ဖြန်းတယ်၊ မီးဘယ်လို ပွင့်တယ် (Implementation Detail) ဆိုတာကို သိစရာ မလိုပါဘူး။ ဒါမှသာ ကားထုတ်လုပ်သူက အင်ဂျင်စနစ်ကို ပြောင်းလဲလိုက်ရင်တောင် မောင်းသူအတွက် ဘာမှ အပြောင်းအလဲ မရှိမှာ ဖြစ်ပါတယ်။",
+      "Encapsulation (အလုံပိတ်ခြင်း)",
+      "ဒါကတော့ Information Hiding ကို လက်တွေ့ အကောင်အထည်ဖော်တဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ အခန်း ၁ OOP မှာ ဆွေးနွေးခဲ့သလိုပါပဲ။ Data တွေနဲ့ အဲ့ဒီ Data တွေကို ကိုင်တွယ်မယ့် Method တွေကို Class တစ်ခုထဲမှာ ပေါင်းထည့်ပြီး၊ အပြင်ကနေ တိုက်ရိုက် ယူသုံးလို့ မရအောင် private access modifier တွေနဲ့ ပိတ်ထားတာ ဖြစ်ပါတယ်။"
+    ],
+    "language": "ts",
+    "code": "// Encapsulation Example\nclass BankAccount {\n    private balance: number = 0; // Data ကို ဖုံးကွယ်ထားသည်\n\n    // အပြင်လူ သုံးဖို့ Interface ဖွင့်ပေးထားသည်\n    public deposit(amount: number): void {\n        if (amount > 0) {\n            this.balance += amount;\n        }\n    }\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_08-code-3",
+    "chapter": "အခန်း ၈ :: Fundamental Principles of Software Engineering",
+    "chapterFile": "chp_08.html",
+    "heading": "၈.၃ Modularity and Composability",
+    "context": [
+      "ဒါကတော့ Information Hiding ကို လက်တွေ့ အကောင်အထည်ဖော်တဲ့ နည်းလမ်း ဖြစ်ပါတယ်။ အခန်း ၁ OOP မှာ ဆွေးနွေးခဲ့သလိုပါပဲ။ Data တွေနဲ့ အဲ့ဒီ Data တွေကို ကိုင်တွယ်မယ့် Method တွေကို Class တစ်ခုထဲမှာ ပေါင်းထည့်ပြီး၊ အပြင်ကနေ တိုက်ရိုက် ယူသုံးလို့ မရအောင် private access modifier တွေနဲ့ ပိတ်ထားတာ ဖြစ်ပါတယ်။",
+      "၈.၃ Modularity and Composability",
+      "Software Engineering မှာ အကြီးမားဆုံး စိန်ခေါ်မှုက Complexity (ရှုပ်ထွေးမှု) ပါ။ ဒီရှုပ်ထွေးမှုကို ဖြေရှင်းဖို့ Modularity ကို သုံးရပါတယ်။",
+      "ဒါကို အမြင်သာဆုံး ဥပမာ ပေးရရင် LEGO တုံးတွေ လိုပါပဲ။ LEGO တုံးလေးတွေက သီးခြားစီ ရှိနေပေမယ့်၊ ပြန်လည် ပေါင်းစပ်လိုက်ရင် ကားဖြစ်သွားလိုက်၊ အိမ်ဖြစ်သွားလိုက်နဲ့ ပုံစံမျိုးစုံ ဖန်တီးနိုင်သလို Software Components တွေကိုလည်း Reusable ဖြစ်အောင် ဖန်တီးထားရပါမယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph \"Composable System\"\n        direction TB\n        Auth[Auth Module]\n        Log[Logging Module]\n        Email[Email Module]\n        Noti[Notification Module]\n    end\n\n    subgraph \"App 1: Web Application\"\n        direction LR\n        W_App[Web App] --> Auth\n        W_App --> Log\n        W_App --> Email\n    end\n\n    subgraph \"App 2: Mobile Application\"\n        direction LR\n        M_App[Mobile App] --> Auth\n        M_App --> Noti\n    end\n\n    style Auth fill:#bbdefb,stroke:#333\n    style Log fill:#bbdefb,stroke:#333",
+    "kind": "example"
+  },
+  {
+    "id": "chp_08-code-4",
+    "chapter": "အခန်း ၈ :: Fundamental Principles of Software Engineering",
+    "chapterFile": "chp_08.html",
+    "heading": "Code example",
+    "context": [
+      "Single Level of Abstraction Principle (SLAP)",
+      "SLAP ဆိုသည်မှာ Function တစ်ခု ရေးသားရာတွင် Code များကို တူညီသော Abstraction Level တစ်ခုတည်းတွင်သာ ရှိနေစေရန် ရေးသားခြင်း ဖြစ်သည်။ High-level Logic (စီးပွားရေး လုပ်ငန်းစဉ်) နှင့် Low-level Details (Code အသေးစိတ်) များကို ရောထွေး မရေးသင့်ပါ။",
+      "Bad Example (Mixed Levels of Abstraction)",
+      "ဒီ Code မှာ checkout လုပ်တဲ့ အဓိက အလုပ်နဲ့၊ Database connection ဖွင့်တာ၊ Email format စစ်တာတွေ ရောထွေးနေပါတယ်။ စာဖတ်သူ အနေနဲ့ အတက်အကျ ကြမ်းလွန်းပါတယ်။"
+    ],
+    "language": "ts",
+    "code": "function checkout(cart: Cart, user: User) {\n    // Low-level detail (Checking email regex)\n    if (!user.email.includes('@')) {\n        throw new Error(\"Invalid Email\");\n    }\n\n    // High-level logic\n    const total = cart.items.reduce((sum, item) => sum + item.price, 0);\n\n    // Low-level detail (Direct DB query)\n    db.query(\"INSERT INTO orders ...\", [total, user.id]);\n\n    // Low-level detail (Email sending implementation)\n    const transporter = nodemailer.createTransport({ ... });\n    transporter.sendMail({ to: user.email, subject: \"Order Placed\" });\n}",
+    "kind": "example"
+  },
+  {
+    "id": "chp_08-code-5",
+    "chapter": "အခန်း ၈ :: Fundamental Principles of Software Engineering",
+    "chapterFile": "chp_08.html",
+    "heading": "Code example",
+    "context": [
+      "Bad Example (Mixed Levels of Abstraction)",
+      "ဒီ Code မှာ checkout လုပ်တဲ့ အဓိက အလုပ်နဲ့၊ Database connection ဖွင့်တာ၊ Email format စစ်တာတွေ ရောထွေးနေပါတယ်။ စာဖတ်သူ အနေနဲ့ အတက်အကျ ကြမ်းလွန်းပါတယ်။",
+      "Good Example (SLAP Applied)",
+      "ဒီ Code မှာတော့ checkout function က မန်နေဂျာ တစ်ယောက်လိုပါပဲ။ အသေးစိတ် မလုပ်ပါဘူး။ သက်ဆိုင်ရာ Function တွေကို လှမ်းခေါ်ခိုင်း (Delegate) ရုံပဲ လုပ်ပါတယ်။ ဖတ်လိုက်ရင် စာအုပ် ခေါင်းစဉ် ဖတ်ရသလို ရှင်းလင်း နေပါလိမ့်မယ်။"
+    ],
+    "language": "ts",
+    "code": "function checkout(cart: Cart, user: User) {\n    validateUser(user);           // High-level\n    const total = calculateTotal(cart); // High-level\n    saveOrderToDatabase(total, user);   // High-level\n    sendConfirmationEmail(user);        // High-level\n}\n\n// Low-level details တွေကို သီးသန့် Function တွေထဲမှာ ဝှက်ထားလိုက်ပါတယ်\nfunction validateUser(user: User) {\n    if (!user.email.includes('@')) throw new Error(\"Invalid Email\");\n}\n// ... other functions",
+    "kind": "example"
+  },
+  {
+    "id": "chp_09-code-1",
+    "chapter": "အခန်း ၉ :: Software Quality Principles and Attributes",
+    "chapterFile": "chp_09.html",
+    "heading": "McCall’s Quality Model (1977)",
+    "context": [
+      "Functional Quality ကို User က မြင်ရသော်လည်း၊ Structural Quality ကို User က မမြင်ရပါ။ သို့သော် ရေရှည်တွင် Structural Quality ညံ့ဖျင်းသော Software သည် ပြုပြင်ရ ခက်ခဲလာပြီး၊ နောက်ဆုံးတွင် ပျက်စီးသွားလေ့ ရှိပါသည်။",
+      "McCall’s Quality Model (1977)",
+      "Software Quality ကို တိုင်းတာရန်အတွက် ၁၉၇၇ ခုနှစ်တွင် Jim McCall က ရှုထောင့် (၃) ခု ပါဝင်သော Model တစ်ခုကို မိတ်ဆက်ခဲ့ပါသည်။ ခေတ်ဟောင်းဟု ဆိုနိုင်သော်လည်း ယနေ့ထက်ထိ အသုံးဝင်နေဆဲ အခြေခံ သဘောတရားများ ဖြစ်ပါသည်။",
+      "McCall က Software တစ်ခု၏ သက်တမ်း (Lifecycle) ကို ကြည့်ပြီး မေးခွန်း ၃ ခု မေးခဲ့ပါတယ် -"
+    ],
+    "language": "mermaid",
+    "code": "mindmap\n  root((McCall's Model))\n    Product Operation<br/>(အသုံးပြုနေစဉ်)\n      Correctness<br/>(မှန်ကန်မှု)\n      Reliability<br/>(စိတ်ချရမှု)\n      Efficiency<br/>(စွမ်းဆောင်ရည်)\n      Integrity<br/>(လုံခြုံမှု)\n      Usability<br/>(သုံးရလွယ်ကူမှု)\n    Product Revision<br/>(ပြုပြင်ပြောင်းလဲစဉ်)\n      Maintainability<br/>(ထိန်းသိမ်းလွယ်မှု)\n      Flexibility<br/>(ပြောင်းလွယ်ပြင်လွယ်မှု)\n      Testability<br/>(စစ်ဆေးရလွယ်ကူမှု)\n    Product Transition<br/>(ပြောင်းရွှေ့စဉ်)\n      Portability<br/>(ရွှေ့ပြောင်းလွယ်မှု)\n      Reusability<br/>(ပြန်သုံးနိုင်မှု)\n      Interoperability<br/>(ချိတ်ဆက်နိုင်မှု)",
+    "kind": "code"
+  },
+  {
+    "id": "chp_09-code-2",
+    "chapter": "အခန်း ၉ :: Software Quality Principles and Attributes",
+    "chapterFile": "chp_09.html",
+    "heading": "၉.၂ ISO/IEC 25010 Quality Model",
+    "context": [
+      "Software Quality ကို တိုင်းတာရန်အတွက် ၁၉၇၇ ခုနှစ်တွင် Jim McCall က ရှုထောင့် (၃) ခု ပါဝင်သော Model တစ်ခုကို မိတ်ဆက်ခဲ့ပါသည်။ ခေတ်ဟောင်းဟု ဆိုနိုင်သော်လည်း ယနေ့ထက်ထိ အသုံးဝင်နေဆဲ အခြေခံ သဘောတရားများ ဖြစ်ပါသည်။",
+      "McCall က Software တစ်ခု၏ သက်တမ်း (Lifecycle) ကို ကြည့်ပြီး မေးခွန်း ၃ ခု မေးခဲ့ပါတယ် -",
+      "၉.၂ ISO/IEC 25010 Quality Model",
+      "McCall Model သည် ကောင်းမွန်သော်လည်း၊ ယနေ့ခေတ် Modern Software Engineering အတွက် နိုင်ငံတကာ စံနှုန်းဖြစ်သော ISO/IEC 25010 ကို အဓိက အသုံးပြုကြပါသည်။ ဤစံနှုန်းတွင် Software Quality ကို အဓိက ခေါင်းစဉ်ကြီး (၈) ခု ဖြင့် ခွဲခြား သတ်မှတ်ထားပါသည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    Main[<b>Software Product Quality</b><br/>ISO/IEC 25010] --> F1[Functional Suitability]\n    Main --> F2[Performance Efficiency]\n    Main --> F3[Compatibility]\n    Main --> F4[Usability]\n    Main --> F5[Reliability]\n    Main --> F6[Security]\n    Main --> F7[Maintainability]\n    Main --> F8[Portability]\n\n    style Main fill:#2962FF,stroke:#fff,color:#fff\n    style F7 fill:#FF6D00,stroke:#333,stroke-width:2px",
+    "kind": "code"
+  },
+  {
+    "id": "chp_09-code-3",
+    "chapter": "အခန်း ၉ :: Software Quality Principles and Attributes",
+    "chapterFile": "chp_09.html",
+    "heading": "၉.၄.၃ Cohesion",
+    "context": [
+      "၉.၄.၂ Coupling",
+      "Module တစ်ခုနဲ့ တစ်ခု ဘယ်လောက်တောင် မှီခို ချိတ်ဆက် မှု ရှိနေလဲ။",
+      "၉.၄.၃ Cohesion",
+      "Module တစ်ခု (သို့မဟုတ် Class တစ်ခု) ဟာ သူ့တာဝန် သူ ဘယ်လောက် focus လုပ်ထားလဲ။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n    subgraph \"Ideal Architecture\"\n        A[<b>High Cohesion</b><br/>One Focus] --- B[<b>Low Coupling</b><br/>Independent]\n    end\n\n    subgraph \"Spaghetti Code\"\n        C[<b>Low Cohesion</b><br/>Mixed Responsibilities] --- D[<b>High Coupling</b><br/>Interdependent]\n    end\n\n    style A fill:#ccffcc,stroke:#333\n    style B fill:#ccffcc,stroke:#333\n    style C fill:#ffcccc,stroke:#333\n    style D fill:#ffcccc,stroke:#333",
+    "kind": "code"
+  },
+  {
+    "id": "chp_10-code-1",
+    "chapter": "အခန်း ၁၀ :: People, Process, and Planning",
+    "chapterFile": "chp_10.html",
+    "heading": "၁၀.၁ The Project Management Triangle (The Iron Triangle)",
+    "context": [
+      "၁၀.၁ The Project Management Triangle (The Iron Triangle)",
+      "Project Manager တစ်ယောက် ဖြစ်လာပြီဆိုလျှင် ပထမဆုံး နားလည်ထားရမည့် သီအိုရီမှာ Project Management Triangle သို့မဟုတ် Iron Triangle ဖြစ်ပါသည်။ Project တစ်ခုတွင် ကန့်သတ်ချက် (Constraint) ၃ ခု အမြဲ ရှိနေပါသည်။",
+      "ဤ ၃ ခု၏ အလယ်တွင် Quality (အရည်အသွေး) ရှိနေပါသည်။",
+      "Quality သည် Constraint မဟုတ်ဘဲ Outcome ဖြစ်သည်။ Scope, Time, Cost ကို ဘယ်လို ဆုံးဖြတ်လဲဆိုတဲ့ ရလဒ်အဖြစ် Quality က ထွက်လာခြင်း ဖြစ်ပါသည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph \"The Iron Triangle\"\n        S((Scope)) --- T((Time))\n        T --- C((Cost))\n        C --- S\n\n        S --- Q{Quality}\n        T --- Q\n        C --- Q\n    end\n\n    style Q fill:#ffeb3b,stroke:#fbc02d,stroke-width:2px",
+    "kind": "code"
+  },
+  {
+    "id": "chp_10-code-2",
+    "chapter": "အခန်း ၁၀ :: People, Process, and Planning",
+    "chapterFile": "chp_10.html",
+    "heading": "Burndown Charts",
+    "context": [
+      "Manager အနေဖြင့် နောက် Sprint မှာ အလုပ်ဘယ်လောက် လက်ခံလို့ရမလဲ (Capacity Planning) တွက်ရာတွင် ဤ Velocity ကို အသုံးပြုရသည်။",
+      "Team တစ်ခုနှင့် တစ်ခု Velocity နှိုင်းယှဉ်၍ မရပါ။ ဒီအချက်က Team တစ်ခုလုံး အနေနဲ့ သေချာနားလည်ထားဖို့ လိုပါတယ်။",
+      "Burndown Charts",
+      "Sprint တစ်ခုအတွင်း အလုပ်တွေ တကယ် ပြီးနေရဲ့လား စောင့်ကြည့်ရန် Burndown Chart ကို သုံးသည်။"
+    ],
+    "language": "mermaid",
+    "code": "xychart-beta\n    title \"Sprint Burndown Chart\"\n    x-axis [\"Day 1\", \"Day 2\", \"Day 3\", \"Day 4\", \"Day 5\", \"Day 6\", \"Day 7\", \"Day 8\", \"Day 9\", \"Day 10\"]\n    y-axis \"Story Points\" 0 --> 50\n    line [50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0]\n    line [50, 48, 48, 40, 35, 38, 30, 20, 10, 5, 0]",
+    "kind": "code"
+  },
+  {
+    "id": "chp_10-code-3",
+    "chapter": "အခန်း ၁၀ :: People, Process, and Planning",
+    "chapterFile": "chp_10.html",
+    "heading": "၁၀.၄.၂ The Role of \"Full Stack\" in Stream-Aligned Teams",
+    "context": [
+      "၁၀.၄.၂ The Role of \"Full Stack\" in Stream-Aligned Teams",
+      "Stream-Aligned Team တစ်ခု ထိရောက်စွာ လည်ပတ်နိုင်ရန် Full Stack Mindset ကို အောက်ပါအတိုင်း နားလည်ထားရပါမည်။",
+      "\"Mastery\" မဟုတ်ပါ၊ \"Capability\" ဖြစ်သည် Full Stack Developer ဆိုသည်မှာ အရာရာကို ကျွမ်းကျင်သော \"One Man Army\" မဟုတ်ပါ။ မိမိ၏ Core Skill (ဥပမာ- Backend) အပြင် အခြားအပိုင်းများ (Frontend, DevOps) ကိုပါ အလုပ်ဖြစ်အောင် ဝင်ရောက်လုပ်ကိုင်နိုင်စွမ်း (Capability) ရှိသူကို ဆိုလိုသည်။",
+      "DevOps & Infrastructure ၏ အခန်းကဏ္ဍ Team ၏ Autonomy (လွတ်လပ်စွာ စီမံခန့်ခွဲခွင့်) အတွက် DevOps Skill သည် အရေးပါသည်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    subgraph \"Evolution to Stream-Aligned Teams\"\n        direction TB\n\n        subgraph \"1. Component (Silo)\"\n            FE[Frontend Team] -.->|Blocking Dependency| BE[Backend Team]\n        end\n\n        subgraph \"2. Feature Team\"\n            FT[FE Specialist + BE Specialist]\n            note2[Sit together, but separate tasks]\n        end\n\n        subgraph \"3. Stream-Aligned Team (Flow)\"\n            SAT[Stream-Aligned Team]\n\n            SAT -->|Owns| Biz[Business Value Stream]\n            SAT -->|Capabilities| FS[Full Stack Mindset]\n            SAT -->|Support| P[Platform/DevOps Expert]\n\n            FS -->|Reduces| Wait[Dependencies]\n            P -->|Enables| FS\n        end\n    end\n\n    style SAT fill:#ccffcc,stroke:#333,stroke-width:2px",
+    "kind": "example"
+  },
+  {
+    "id": "chp_11-code-1",
+    "chapter": "အခန်း ၁၁ :: Software Quality Assurance (SQA)",
+    "chapterFile": "chp_11.html",
+    "heading": "2. Quality Control (QC) - \"Product Focus\"",
+    "context": [
+      "၁၁.၁ QA vs. QC (QA နှင့် QC မတူပါ)",
+      "Developer အများစုသည် SQA (Software Quality Assurance) နှင့် QC (Quality Control) ကို ရောထွေး မှားယွင်းတတ်ကြသည်။ ဤနှစ်ခုသည် ရည်ရွယ်ချက်ရော လုပ်ဆောင်ပုံပါ ကွာခြားပါသည်။",
+      "1. Quality Assurance (QA) - \"Process Focus\"",
+      "2. Quality Control (QC) - \"Product Focus\""
+    ],
+    "language": "mermaid",
+    "code": "graph TD\nsubgraph \"Quality Management\"\nQA[\"<b>SQA (Assurance)</b><br/>Process Focused<br/><i>Prevention</i>\"]\nQC[\"<b>QC (Control)</b><br/>Product Focused<br/><i>Detection</i>\"]\nend\n\nQA -->|Sets Standards| Process[Development Process]\nProcess -->|Produces| Software\nQC -->|Finds Bugs| Software\nQC -.->|Feedback| QA\n\nstyle QA fill:#e1f5fe,stroke:#01579b\nstyle QC fill:#ffebee,stroke:#b71c1c",
+    "kind": "code"
+  },
+  {
+    "id": "chp_11-code-2",
+    "chapter": "အခန်း ၁၁ :: Software Quality Assurance (SQA)",
+    "chapterFile": "chp_11.html",
+    "heading": "Level 5: Optimizing (Continuous Improvement)",
+    "context": [
+      "Level 2: Managed (Basic Tooling)",
+      "Level 3: Defined (Standardization)",
+      "Level 4: Quantitatively Managed (Metrics Driven)",
+      "Level 5: Optimizing (Continuous Improvement)"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\nL1[\"<b>Level 1</b>Hero Dev\"] --> L2[\"<b>Level 2</b>Jira + Basic CI\"]\nL2 --> L3[\"<b>Level 3</b>Process + Strategy\"]\nL3 --> L4[\"<b>Level 4</b>Metrics (DORA)\"]\nL4 --> L5[\"<b>Level 5</b>RCA Culture\"]\n\nstyle L3 fill:#fff9c4,stroke:#fbc02d,stroke-width:2px\nstyle L4 fill:#bbdefb,stroke:#1976d2,stroke-width:2px\nstyle L5 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px",
+    "kind": "code"
+  },
+  {
+    "id": "chp_11-code-3",
+    "chapter": "အခန်း ၁၁ :: Software Quality Assurance (SQA)",
+    "chapterFile": "chp_11.html",
+    "heading": "၁၁.၇ Defect Management",
+    "context": [
+      "၁၁.၆ Software Reviews and Audits",
+      "Code ရေးပြီးမှ စစ်ဆေးခြင်းထက်၊ မရေးခင် သို့မဟုတ် ရေးနေစဉ် စစ်ဆေးခြင်းက ကုန်ကျစရိတ် ပိုသက်သာသည်။",
+      "၁၁.၇ Defect Management",
+      "Bug တစ်ခု တွေ့ပြီဆိုရင် \"တွေ့ပြီ၊ ပြင်လိုက်ပြီ\" ဆိုပြီး ပြီးသွားလို့ မရပါ။ Defect Lifecycle တစ်ခု ရှိဖို့ လိုပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "stateDiagram-v2\n[*] --> New\nNew --> Open: Confirmed\nOpen --> Assigned: Dev Assigned\nAssigned --> InProgress: Coding\nInProgress --> Fixed: Dev Done\nFixed --> Verified: QA Pass\nVerified --> Closed: Release\nFixed --> Reopened: QA Fail\nReopened --> Assigned\nOpen --> Rejected: Not a Bug\nOpen --> Deferred: Fix Later",
+    "kind": "example"
+  },
+  {
+    "id": "chp_12-code-1",
+    "chapter": "အခန်း ၁၂ :: Risk Management",
+    "chapterFile": "chp_12.html",
+    "heading": "၁၂.၂ Risk Identification, Analysis, and Prioritization",
+    "context": [
+      "Proactive Strategy (မီးမလောင်ခင် တားဆီးခြင်း)",
+      "ပြဿနာ မဖြစ်ခင် ကတည်းက \"ဘာတွေ ဖြစ်နိုင်မလဲ\" တွက်ချက်ပြီး ကြိုတင် ကာကွယ်ထားတာပါ။",
+      "၁၂.၂ Risk Identification, Analysis, and Prioritization",
+      "Risk Management လုပ်ငန်းစဉ်ကို အဆင့် ၄ ဆင့် ခွဲခြားနိုင်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n    Identify[<b>1. Risk Identification</b><br/>ဘာတွေ ဖြစ်နိုင်မလဲ?] --> Analyze[<b>2. Risk Analysis</b><br/>ဖြစ်နိုင်ခြေ ဘယ်လောက်ရှိလဲ?]\n    Analyze --> Prioritize[<b>3. Risk Prioritization</b><br/>ဘယ်ဟာ အရေးအကြီးဆုံးလဲ?]\n    Prioritize --> Plan[<b>4. Response Planning</b><br/>ဘယ်လို ဖြေရှင်းမလဲ?]\n\n    style Identify fill:#e1f5fe,stroke:#01579b\n    style Analyze fill:#fff3e0,stroke:#e65100\n    style Prioritize fill:#ffebee,stroke:#b71c1c\n    style Plan fill:#e8f5e9,stroke:#1b5e20",
+    "kind": "code"
+  },
+  {
+    "id": "chp_12-code-2",
+    "chapter": "အခန်း ၁၂ :: Risk Management",
+    "chapterFile": "chp_12.html",
+    "heading": "Code example",
+    "context": [
+      "DR ကတော့ BCP ရဲ့ အစိတ်အပိုင်း တစ်ခုဖြစ်ပြီး IT System တွေကို ဘယ်လို ပြန်ကယ်မလဲ (Restore) ဆိုတာကို အဓိက ထားပါတယ်။",
+      "DR Plan တစ်ခု ရေးဆွဲရာမှာ အရေးကြီးဆုံး Metric နှစ်ခု ရှိပါတယ်။",
+      "1. Recovery Point Objective (RPO) \"Data ဘယ်လောက် ပျက်စီးတာကို လက်ခံနိုင်မလဲ\"",
+      "2. Recovery Time Objective (RTO) \"System ပြန်ကောင်းဖို့ အချိန် ဘယ်လောက် ပေးနိုင်မလဲ\""
+    ],
+    "language": "mermaid",
+    "code": "timeline\n    title Disaster Recovery Timeline\n    Last Backup : RPO (Max Data Loss)\n    Disaster Strikes : System Goes Down\n    Recovery Starts : Log Analysis / Restore\n    System Restored : RTO (Max Downtime)",
+    "kind": "code"
+  },
+  {
+    "id": "chp_13-code-1",
+    "chapter": "အခန်း ၁၃ :: DevOps and Site Reliability Engineering (SRE)",
+    "chapterFile": "chp_13.html",
+    "heading": "Tools and Workflow",
+    "context": [
+      "CI/CD မရှိရင် ဘာဖြစ်မလဲ?",
+      "Tools and Workflow",
+      "CI/CD ကို GitHub Actions, GitLab CI တို့မှာ လွယ်ကူစွာ ပြုလုပ်နိုင်သလို၊ Cloud သုံးသူတွေအတွက် AWS CodePipeline လိုမျိုး Service တွေလည်း ရှိပါတယ်။ Workflow ကတော့ ရိုးရှင်းပါတယ်။ ဥပမာ - dev branch ကို push လုပ်လိုက်ရင် Dev Server မှာ အလိုအလျောက် Deploy လုပ်မယ်၊ main (Production) branch ကို push လုပ်ရင် Production မှာ Deploy လုပ်မယ် ဆိုပြီး သတ်မှတ်ထားနိုင်ပါတယ်။",
+      "CI/CD Process တွေဟာ ကိုယ်အသုံးပြုမည့် နည်းပညာ (Tech Stack) ပေါ် မူတည်ပြီး ကွာခြားနိုင်ပါတယ် -"
+    ],
+    "language": "mermaid",
+    "code": "graph TB\n    Code[Developer Push Code] --> Git{Git Branch?}\n\n    subgraph CI [Continuous Integration - GitHub Actions]\n        Git -->|feature/dev branch| GHA1[GitHub Actions Trigger]\n        Git -->|main/master branch| GHA2[GitHub Actions Trigger]\n\n        GHA1 --> Docker1[Build Docker Image]\n        GHA2 --> Docker2[Build Docker Image]\n\n        Docker1 --> Unit1[Run Unit Tests]\n        Docker2 --> Unit2[Run Unit Tests]\n\n        Unit1 --> Int1[Run Integration Tests]\n        Unit2 --> Int2[Run Integration Tests]\n    end\n\n    subgraph CD [Continuous Deployment]\n        Int1 -->|Tests Pass| Staging[Deploy to Staging]\n        Staging --> E2E1[Run E2E Tests on Staging]\n        E2E1 --> Done1[Done - Review in Staging]\n\n        Int2 -->|Tests Pass| Prod[Deploy to Production]\n        Prod --> E2E2[Run E2E/Smoke Tests]\n        E2E2 --> Monitor[Monitor & Rollback if needed]\n    end\n\n    Unit1 -.->|Tests Fail| Notify1[Notify Developer]\n    Unit2 -.->|Tests Fail| Notify2[Notify Developer]\n\n    style CI fill:#e1f5fe,stroke:#01579b,stroke-width:2px\n    style CD fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px\n    style Git fill:#fff3e0,stroke:#e65100,stroke-width:2px",
+    "kind": "example"
+  },
+  {
+    "id": "chp_14-code-1",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "၂. Defense in Depth (အလွှာလိုက် ကာကွယ်ခြင်း)",
+    "context": [
+      "၁. Principle of Least Privilege (PoLP)",
+      "User တစ်ယောက် (သို့) Service တစ်ခုကို \"လိုအပ်သလောက် အနည်းဆုံး\" လုပ်ပိုင်ခွင့်ပဲ ပေးရပါမယ်။",
+      "၂. Defense in Depth (အလွှာလိုက် ကာကွယ်ခြင်း)",
+      "လုံခြုံရေးကို တစ်နေရာတည်းမှာ ပုံအောမထားပါနဲ့။ ရဲတိုက်တစ်ခုလိုပါပဲ။ ကျုံး ရှိမယ်၊ မြို့ရိုး ရှိမယ်၊ တံခါးစောင့် ရှိမယ်၊ အတွင်းဆောင် ရှိမယ်။ တစ်နေရာ ပေါက်တာနဲ့ အကုန်ပါသွားတာမျိုး မဖြစ်ရပါဘူး။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    autonumber\n\n    participant Attacker as Client/Attacker\n\n    participant FW as Firewall\n\n    participant WAF as WAF\n\n    participant App as App (Auth & Validation)\n\n    participant DB as Database (Encryption)\n\n    Attacker->>FW: 1. Incoming Request\n\n    Note right of FW: Layer 1: Network Security\n\n    FW->>WAF: 2. Allowed Ports/IPs\n\n    Note right of WAF: Layer 2: Web Protection\n\n    WAF->>App: 3. Clean Request\n\n    Note right of App: Layer 3 & 4: Auth & Input Validation\n\n    App->>DB: 4. Query\n\n    Note right of DB: Layer 5: Data Encryption\n\n    DB-->>App: Data\n\n    App-->>Attacker: Response",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-2",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "၁၄.၂ Data Protection Essentials: Encoding, Encryption vs Hashing",
+    "context": [
+      "Complexity က Security ရဲ့ ရန်သူပါ။ System ရှုပ်ထွေးလေ၊ အမှားပါလာနိုင်လေပါပဲ။ လုံခြုံရေး စနစ်တွေကို ရိုးရှင်းပြီး စစ်ဆေးရ လွယ်ကူအောင် (Auditable) ထားသင့်ပါတယ်။",
+      "၁၄.၂ Data Protection Essentials: Encoding, Encryption vs Hashing",
+      "Software Engineer တစ်ယောက်အနေနဲ့ ဒီ ၃ ခုကို လုံးဝ (လုံးဝ) ရောထွေးလို့ မရပါဘူး။",
+      "Data ကို ပုံစံပြောင်းတာခြင်း တူပေမယ့်၊ ရည်ရွယ်ချက် တွေက မတူညီပါဘူး။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n\n    subgraph Encoding\n\n    A[Data] -->|Base64| B[Encoded Data]\n\n    B -->|Base64| A\n\n    end\n\n    subgraph Encryption\n\n    C[Data] -->|Key| D[Encrypted Data]\n\n    D -->|Key| C\n\n    end\n\n    subgraph Hashing\n\n    E[Data] -->|One Way| F[Hash Value]\n\n    F -.->|Cannot Reverse| E\n\n    end",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-3",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "Code example",
+    "context": [
+      "Why AEAD? (Confidentiality + Integrity)",
+      "AEAD algorithm တွေက Encrytion လုပ်တဲ့အခါမှာ Authentication Tag တစ်ခုပါ တွဲထုတ်ပေးပါတယ်။",
+      "Data ကို Decrypt လုပ်တဲ့အခါ၊ အဲဒီ Tag ကို အရင်စစ်ပါတယ်။ Tag ကိုက်ညီမှသာ Data ကို Decrypt လုပ်ပေးပါတယ်။",
+      "ဒါကြောင့် Hacker က Encrypted Data ကို တစ်လုံးပဲ ပြင်လိုက်ရင်တောင် Tag မကိုက်တော့တဲ့အတွက် Decryption process က ချက်ချင်း Fail ဖြစ်သွားပြီး မှားယွင်းတဲ့ Data ထွက်လာမှာကို ကာကွယ်ပေးနိုင်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    participant Sender\n\n    participant Receiver\n\n    Note over Sender, Receiver: Shared Secret Key (Key)\n\n    Sender->>Sender: Encrypt(Key, Msg) -> Ciphertext + AuthTag\n\n    Sender->>Receiver: Send (Ciphertext, AuthTag)\n\n    Receiver->>Receiver: Verify Integrity (AuthTag)\n\n    alt Tag Matches\n\n        Receiver->>Receiver: Decrypt -> Message\n\n    else Tag Mismatch\n\n        Receiver->>Receiver: REJECT (File Corrupted/Tampered)\n\n    end",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-4",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "B. Asymmetric Encryption (Mailbox Role)",
+    "context": [
+      "ဒါကြောင့် Hacker က Encrypted Data ကို တစ်လုံးပဲ ပြင်လိုက်ရင်တောင် Tag မကိုက်တော့တဲ့အတွက် Decryption process က ချက်ချင်း Fail ဖြစ်သွားပြီး မှားယွင်းတဲ့ Data ထွက်လာမှာကို ကာကွယ်ပေးနိုင်ပါတယ်။",
+      "B. Asymmetric Encryption (Mailbox Role)",
+      "Key နှစ်ချောင်း သုံးပါတယ်။ Public Key (လူတိုင်းကို ပေးထားလို့ ရတယ်) နဲ့ Private Key (ကိုယ်တစ်ယောက်တည်း သိမ်းထားရမယ်)။",
+      "စာတိုက်ပုံး (Mailbox) လိုပါပဲ။ စာထည့်တဲ့ အပေါက် (Public Key) ကနေ ဘယ်သူမဆို စာလာထည့်လို့ ရတယ်။ ဒါပေမယ့် စာတိုက်ပုံးကို ဖွင့်ပြီး စာဖတ်ဖို့ (Decrypt) အတွက်တော့ သော့ (Private Key) ရှိတဲ့ ပိုင်ရှင်ပဲ လုပ်လို့ ရပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    participant Alice\n\n    participant Bob\n\n    Note over Bob: Bob has Key Pair:<br/>Private Key (secret)<br/>Public Key (shared)\n\n    Bob->>Alice: 1. Share Public Key\n\n    Note over Alice: Alice encrypts message<br/>with Bob's Public Key\n\n    Alice->>Bob: 2. Send Encrypted Message\n\n    Note over Bob: Bob decrypts with<br/>his Private Key\n\n    Note over Bob: Only Bob can read!",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-5",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "The Solution: BFF Pattern (Backend for Frontend)",
+    "context": [
+      "ဒါကြောင့် Secret Key တွေကို Frontend/Mobile App ထဲ ဘယ်တော့မှ မထည့်ရပါဘူး။",
+      "The Solution: BFF Pattern (Backend for Frontend)",
+      "OpenAI API Key လိုမျိုး Secret တွေကို Backend Server ပေါ်မှာပဲ ထားပါ။ Mobile App က ကိုယ့် Backend ကို လှမ်းခေါ်၊ Backend ကမှတဆင့် OpenAI ကို Key နဲ့ လှမ်းခေါ်။ ဒါဆိုရင် Secret Key က Server ပေါ်မှာပဲ ရှိနေလို့ လုံခြုံပါတယ်။",
+      "အမှား (Insecure): Mobile App ထဲမှာ Key ထည့်ထားတာ။ Hacker က Decompile လုပ်ပြီး Key ကို ယူသွားနိုင်တယ်။"
+    ],
+    "language": "mermaid",
+    "code": "flowchart LR\n\n    subgraph Client[\"Client (Mobile/Web)\"]\n\n        A[App with<br/>API Key]\n\n    end\n\n    subgraph Third[\"Third Party Service\"]\n\n        B[OpenAI / Stripe]\n\n    end\n\n    A -->|\"API Key exposed<br/>in app code\"| B\n\n    subgraph Hacker[\"Hacker\"]\n\n        H[Decompile App<br/>Extract API Key]\n\n    end\n\n    Client -.->|\"Key ခိုးယူနိုင်\"| Hacker\n\n    Hacker -.->|\"စိတ်ကြိုက်သုံးစွဲ\"| Third",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-6",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "The Solution: BFF Pattern (Backend for Frontend)",
+    "context": [
+      "The Solution: BFF Pattern (Backend for Frontend)",
+      "OpenAI API Key လိုမျိုး Secret တွေကို Backend Server ပေါ်မှာပဲ ထားပါ။ Mobile App က ကိုယ့် Backend ကို လှမ်းခေါ်၊ Backend ကမှတဆင့် OpenAI ကို Key နဲ့ လှမ်းခေါ်။ ဒါဆိုရင် Secret Key က Server ပေါ်မှာပဲ ရှိနေလို့ လုံခြုံပါတယ်။",
+      "အမှား (Insecure): Mobile App ထဲမှာ Key ထည့်ထားတာ။ Hacker က Decompile လုပ်ပြီး Key ကို ယူသွားနိုင်တယ်။",
+      "အမှန် (Secure): Proxy ခံသုံးတာ။"
+    ],
+    "language": "mermaid",
+    "code": "flowchart LR\n\n    subgraph Client[\"Client (Mobile/Web)\"]\n\n        A[App<br/>No API Key]\n\n    end\n\n    subgraph Backend[\"Your Backend Server\"]\n\n        B[API Key<br/>stored securely]\n\n    end\n\n    subgraph Third[\"Third Party Service\"]\n\n        C[OpenAI / Stripe]\n\n    end\n\n    A -->|\"1. Request<br/>(No secret)\"| B\n\n    B -->|\"2. Call with<br/>API Key\"| C\n\n    C -->|\"3. Response\"| B\n\n    B -->|\"4. Response\"| A",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-7",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "၁၄.၇ Network Security & MitM Attacks",
+    "context": [
+      "အမှန် (Secure): Proxy ခံသုံးတာ။",
+      "၁၄.၇ Network Security & MitM Attacks",
+      "Network ပေါ်မှာ Data ပို့ရင် အမြဲတမ်း သတိထားရမှာက \"ကြားကလူ ဖြတ်ဖတ်နိုင်တယ်\" ဆိုတာပါပဲ။ ဒါကို Man-in-the-Middle (MitM) Attack လို့ ခေါ်ပါတယ်။",
+      "ဥပမာ - Coffee Shop က Free Wi-Fi ကို သုံးနေတုန်း Hacker က အဲဒီ Wi-Fi ကို ထိန်းချုပ်ထားရင်၊ ကိုယ်ပို့သမျှ Data တွေကို သူ မြင်ရပါမယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    participant User\n\n    participant Hacker\n\n    participant Server\n\n    User->>Hacker: Send Login (username/password)\n\n    Note over Hacker: Intercepts & Reads Data\n\n    Hacker->>Server: Forwards Request\n\n    Server-->>Hacker: Sends Success Token\n\n    Hacker-->>User: Forwards Token\n\n    Note over User, Hacker: User thinks connection is secure",
+    "kind": "example"
+  },
+  {
+    "id": "chp_14-code-8",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "၂. CSRF (Cross-Site Request Forgery)",
+    "context": [
+      "၁. XSS (Cross-Site Scripting)",
+      "Hacker က ကိုယ့် Web Page ထဲမှာ JavaScript လာ Run တာပါ။",
+      "၂. CSRF (Cross-Site Request Forgery)",
+      "User ကို အလိမ်အညာ Link နှိပ်ခိုင်းပြီး၊ User မသိဘဲ နောက်ကွယ်ကနေ Request ပို့ခိုင်းတာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    participant User\n\n    participant MaliciousSite\n\n    participant Bank\n\n    User->>Bank: 1. Login (Session Cookie Set)\n\n    User->>MaliciousSite: 2. Visit Attacker's Site\n\n    MaliciousSite->>Bank: 3. Auto-submit Form (Transfer Money)\n\n    Note right of MaliciousSite: Browser sends Bank's Cookie automatically!\n\n    Bank->>Bank: 4. Check Cookie (Valid) -> Transfer Success (Hacked!)\n\n    Note over Bank: Fix: Check CSRF Token. <br/>Attacker doesn't know the token!",
+    "kind": "code"
+  },
+  {
+    "id": "chp_14-code-9",
+    "chapter": "အခန်း ၁၄ :: Security",
+    "chapterFile": "chp_14.html",
+    "heading": "၁၄.၉ DevSecOps Pipeline",
+    "context": [
+      "CSP (Content Security Policy)",
+      "XSS ကို ကာကွယ်ဖို့ အကောင်းဆုံး လက်နက်ပါ။ ကိုယ့် Page ပေါ်မှာ ဘယ် Domain က Script တွေကိုပဲ Run ခွင့်ပြုမယ်ဆိုတာ သတ်မှတ်တာပါ။",
+      "၁၄.၉ DevSecOps Pipeline",
+      "Security ကို နောက်ဆုံးမှ မစစ်ဘဲ၊ Development အဆင့်ဆင့်မှာ Checkpoint တွေ ခံထားတာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph LR\n\n    Dev[Developer] -->|Commit| Git\n\n    Git --> Secrets[Secret Scan]\n\n    Secrets --> SAST\n\n    subgraph \"Automated Security Checks\"\n\n        SAST(Code Scan) --> SCA(Dependency Scan)\n\n        SCA --> Build[Container Build]\n\n        Build --> ContainerScan[Image Scan]\n\n        ContainerScan --> DAST(Attack Simulation)\n\n    end\n\n    DAST -->|Pass| Deploy\n\n    Deploy --> Monitor(Runtime Security)",
+    "kind": "code"
+  },
+  {
+    "id": "chp_15-code-1",
+    "chapter": "အခန်း ၁၅ :: Maintenance",
+    "chapterFile": "chp_15.html",
+    "heading": "4. Preventive Maintenance (ကြိုတင် ကာကွယ်ခြင်း)",
+    "context": [
+      "\"Software က မသေမချင်း ပြောင်းလဲနေရမယ်\" (Software must evolve) ဆိုတဲ့ သဘောတရားပါပဲ။",
+      "4. Preventive Maintenance (ကြိုတင် ကာကွယ်ခြင်း)",
+      "အခု လောလောဆယ် ဘာပြဿနာမှ မရှိပေမယ့်၊ နောင်တစ်ချိန် ဒုက္ခ မရောက်အောင် ကြိုလုပ်ထားတာပါ။",
+      "ဒါမျိုးတွေက လုပ်နေတုန်းမှာ User အတွက် ဘာမှ ထူးခြားမှု မရှိပေမယ့်၊ ရေရှည်မှာ System ကို ကျန်းမာစေ (Healthy) ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "pie title Maintenance အလုပ် ခွဲဝေမှု (ခန့်မှန်းခြေ)\n\n    \"Perfective (Feature အသစ်/Performance)\" : 55\n\n    \"Adaptive (Environment အပြောင်းအလဲ)\" : 20\n\n    \"Corrective (Bug ဖာထေးခြင်း)\" : 20\n\n    \"Preventive (Refactoring)\" : 5",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-1",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "Horizontal Scaling (Scaling Out)",
+    "context": [
+      "Vertical Scaling (Scaling Up)",
+      "လက်ရှိ Server ရဲ့ Hardware (CPU, RAM, SSD) ကို အဆင့်မြှင့်တာပါ။",
+      "Horizontal Scaling (Scaling Out)",
+      "Server အလုံးရေ ကို တိုးပြီး Load မျှ သုံးတဲ့ နည်းလမ်းပါ။ Server တစ်လုံးတည်းက လုပ်မယ့်အစား ၃ လုံးလောက် ခွဲပြီး လုပ်လိုက်တာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n\n    subgraph \"Vertical Scaling (Scaling Up)\"\n\n        A[\"Server (Small)\"] --> B[\"Server (Big)\"]\n\n    end\n\n    subgraph \"Horizontal Scaling (Scaling Out)\"\n\n        Client --> F(Load Balancer)\n\n        C[Server 1]\n\n        D[Server 2]\n\n        E[Server 3]\n\n        F --> C\n\n        F --> D\n\n        F --> E\n\n    end",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-2",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "Caching Flow (Cache-Aside Pattern)",
+    "context": [
+      "၁၆.၅ Caching Strategies",
+      "Caching ဆိုတာ မကြာခဏ သုံးနေရတဲ့ Data တွေကို ယူရခက်တဲ့ နေရာ (Database) ကနေ ယူမယ့်အစား၊ ယူရလွယ်တဲ့ နေရာ (RAM) မှာ ခဏ သိမ်းထားတာပါ။ ဒါဆိုရင် Data လိုချင်တိုင်း Database ကို သွားသွား ခေါက်နေစရာ မလိုတော့လို့ ပိုမြန်ပါတယ်။",
+      "Caching Flow (Cache-Aside Pattern)",
+      "အောက်ပါ Diagram တွင် Application သည် data လိုချင်သည့်အခါ Cache ကို အရင်စစ်ဆေးပုံ (Cache Hit vs Cache Miss) ကို ပြသထားသည်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    autonumber\n\n    participant Client\n\n    participant App as Application\n\n    participant Cache\n\n    participant DB as Database\n\n    Client->>App: Request Data (ID: 101)\n\n    App->>Cache: Get Data (ID: 101)\n\n\n\n    alt Cache Hit (Data exists)\n\n        Cache-->>App: Return Data\n\n    else Cache Miss (Data not found)\n\n        Cache-->>App: Not Found\n\n        App->>DB: Query Data (ID: 101)\n\n        DB-->>App: Return Result\n\n        App->>Cache: Set Data (ID: 101)\n\n    end\n\n\n\n    App-->>Client: Return Response",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-3",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "1. Write-through",
+    "context": [
+      "၁၆.၅.၁ Cache Write Strategies",
+      "Data အသစ်ဝင်လာရင် Cache ထဲကို ဘယ်လို ထည့်မလဲ ဆိုတာ မူဝါဒ (Policy) ထားရှိဖို့ လိုပါတယ်။",
+      "1. Write-through",
+      "Data လာရင် Cache ထဲကိုလည်း ထည့်တယ်၊ Database ထဲကိုလည်း တစ်ခါတည်း (Synchronous) ထည့်ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    autonumber\n\n    participant Client\n\n    participant App\n\n    participant Cache\n\n    participant DB\n\n    Client->>App: Write Data\n\n    Note right of App: Update both Cache & DB\n\n    App->>Cache: Save Data\n\n    App->>DB: Save Data\n\n\n\n    Cache-->>App: Success\n\n    DB-->>App: Success\n\n\n\n    App-->>Client: Acknowledge Write",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-4",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "2. Write-around",
+    "context": [
+      "1. Write-through",
+      "Data လာရင် Cache ထဲကိုလည်း ထည့်တယ်၊ Database ထဲကိုလည်း တစ်ခါတည်း (Synchronous) ထည့်ပါတယ်။",
+      "2. Write-around",
+      "Database ထဲကိုပဲ တိုက်ရိုက် ထည့်လိုက်ပါတယ်။ Cache ကို ကျော်သွားတယ်။ ပြန်သုံးချင်တဲ့ အချိန်ကျမှ Database ကနေ ယူပြီး Cache ထဲ ထည့် (Lazy Load) ပါတယ်။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    autonumber\n\n    participant Client\n\n    participant App\n\n    participant Cache\n\n    participant DB\n\n    Client->>App: Write Data\n\n    Note right of App: Update DB only (Bypass Cache)\n\n    App->>DB: Save Data\n\n    DB-->>App: Success\n\n    App-->>Client: Acknowledge Write\n\n\n\n    Note over Client, DB: Later, when reading data...\n\n\n\n    Client->>App: Read Data\n\n    App->>Cache: Get Data\n\n    Cache-->>App: Miss (Not Found)\n\n    App->>DB: Get Data\n\n    DB-->>App: Return Data\n\n    App->>Cache: Save Data (Lazy Load)\n\n    App-->>Client: Return Data",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-5",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "3. Write-back (Write-behind)",
+    "context": [
+      "2. Write-around",
+      "Database ထဲကိုပဲ တိုက်ရိုက် ထည့်လိုက်ပါတယ်။ Cache ကို ကျော်သွားတယ်။ ပြန်သုံးချင်တဲ့ အချိန်ကျမှ Database ကနေ ယူပြီး Cache ထဲ ထည့် (Lazy Load) ပါတယ်။",
+      "3. Write-back (Write-behind)",
+      "ဒါကတော့ Cache ထဲကိုပဲ အရင် ထည့်လိုက်တာပါ။ User ကို ချက်ချင်း အိုကေ ပြန်ပြောလိုက်တယ်။ ပြီးမှ နောက်ကွယ်ကနေ (Asynchronous) Database ထဲကို လိုက်ထည့်တာပါ။"
+    ],
+    "language": "mermaid",
+    "code": "sequenceDiagram\n\n    autonumber\n\n    participant Client\n\n    participant App\n\n    participant Cache\n\n    participant DB\n\n    Client->>App: Write Data\n\n    Note right of App: Update Cache only\n\n    App->>Cache: Save Data (Dirty)\n\n    Cache-->>App: Ack\n\n    App-->>Client: Success (Fast Response)\n\n\n\n    Note over Cache, DB: Asynchronously...\n\n\n\n    loop Background Sync\n\n        Cache->>DB: Flush Dirty Data\n\n        DB-->>Cache: Success\n\n    end",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-6",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "Load Balancer",
+    "context": [
+      "၁၆.၇ Load Balancing and High Availability",
+      "Load Balancer",
+      "Server တွေ အများကြီး သုံးတဲ့အခါ Traffic ကို မျှပေးမယ့် (Traffic Distribution) ကောင် လိုပါတယ်။ ဒါက Load Balancer ပါ။",
+      "Load Balancing Algorithm အမျိုးမျိုး ရှိပါတယ်:"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n\n    Client1(Client) --> LB[Load Balancer]\n\n    Client2(Client) --> LB\n\n    LB --> Server1[Server 1]\n\n    LB --> Server2[Server 2]\n\n    LB --> Server3[Server 3]",
+    "kind": "code"
+  },
+  {
+    "id": "chp_16-code-7",
+    "chapter": "အခန်း ၁၆ :: Performance and Scalability",
+    "chapterFile": "chp_16.html",
+    "heading": "High Availability (HA)",
+    "context": [
+      "Server တွေ အများကြီး သုံးတဲ့အခါ Traffic ကို မျှပေးမယ့် (Traffic Distribution) ကောင် လိုပါတယ်။ ဒါက Load Balancer ပါ။",
+      "Load Balancing Algorithm အမျိုးမျိုး ရှိပါတယ်:",
+      "High Availability (HA)",
+      "System တစ်ခုလုံး ဘယ်တော့မှ မရပ်သွားအောင် (No Single Point of Failure) လုပ်ဆောင်ခြင်းပါ။"
+    ],
+    "language": "mermaid",
+    "code": "graph TD\n\n    C[Clients] --> LB[(Load Balancer - Multi-AZ / HA)]\n\n    subgraph \"Availability Zone A\"\n\n      S1[App Server A]\n\n      DB1[(Primary DB)]\n\n    end\n\n    subgraph \"Availability Zone B\"\n\n      S2[App Server B]\n\n      DB2[(Standby/Replica DB)]\n\n    end\n\n    LB --> S1\n\n    LB --> S2\n\n    S1 --> DBE[(DB Endpoint/Proxy)]\n\n    S2 --> DBE\n\n    DBE --> DB1\n\n    DBE -. failover switch .-> DB2\n\n    DB1 -- Replication --> DB2\n\n    DB2 -. Promote on failover .-> DB1",
+    "kind": "code"
+  }
+]
