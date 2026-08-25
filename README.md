@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Saturngod-style book reader
+
+The story detail route now uses a chapter-oriented reading layout inspired by `https://se.saturngod.net/`. It includes a focused book hero, chapter table of contents, slide-out navigation, chapter search, reading themes, font-size and line-height controls, and a dedicated code reference entry point.
+
+For any story, open `/stories/{storyId}/examples` to view the extracted code blocks and examples. The Software Engineering reference has been stored in `content/code-examples.json` for structured use and `content/code-examples.md` for a human-readable companion reference. The current seeded story can be previewed at `/stories/s1`, with its code index at `/stories/s1/examples`.
